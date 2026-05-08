@@ -5,6 +5,7 @@ import heroImage from "@/assets/hero-cosmetics.jpg";
 import lipstick from "@/assets/lipstick.png";
 import brush from "@/assets/brush.png";
 import compact from "@/assets/compact.png";
+import perfume from "@/assets/perfume.png";
 
 const HeroSection = () => {
   return (
@@ -45,8 +46,8 @@ const HeroSection = () => {
         height={512}
       />
       <motion.img
-        src="/logo.png"
-        alt="Avish logo floating"
+        src={perfume}
+        alt="Floating perfume"
         className="absolute bottom-24 right-[8%] w-20 md:w-28 pointer-events-none hidden md:block"
         animate={{ y: [0, -18, -6, 0], rotate: [0, -2, 3, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}

@@ -1,6 +1,8 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import perfume from "@/assets/perfume.png";
+import { useRef, Suspense } from "react";
+import { lazy } from "react";
+
+const Logo3D = lazy(() => import("@/components/Logo3D"));
 
 const AboutSection = () => {
   const ref = useRef(null);
@@ -9,7 +11,6 @@ const AboutSection = () => {
   return (
     <section id="about" className="py-16 md:py-20 relative overflow-hidden" ref={ref}>
       <div className="absolute top-0 right-0 w-96 h-96 bg-glow rounded-full blur-3xl opacity-20" />
-
       <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -19,16 +20,13 @@ const AboutSection = () => {
         >
           <div className="relative w-72 h-72 md:w-96 md:h-96 mx-auto">
             <div className="absolute inset-0 rounded-full bg-blush/50" />
-            <motion.img
-              src={perfume}
-              alt="Avish perfume"
-              className="relative z-10 w-full h-full object-contain"
-              animate={{ y: [0, -15, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              loading="lazy"
-              width={512}
-              height={768}
-            />
+            <Suspense fallback={
+              <div className="w-full h-full flex items-center justify-center">
+                <img src="/logo.png" alt="Avish logo" className="w-48 h-48 object-contain animate-pulse" />
+              </div>
+            }>
+              <Logo3D className="relative z-10" />
+            </Suspense>
           </div>
         </motion.div>
 
