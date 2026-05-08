@@ -43,7 +43,7 @@ const BestSellers = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
-          className="flex items-end justify-between mb-12"
+          className="flex flex-col items-center text-center mb-12"
         >
           <div>
             <p className="font-body text-xs tracking-[0.4em] uppercase text-primary mb-4">Most Loved</p>
@@ -51,7 +51,7 @@ const BestSellers = () => {
               Best <span className="italic text-primary">Sellers</span>
             </h2>
           </div>
-          <div className="hidden md:flex gap-3">
+          <div className="flex gap-3 mt-4">
             <button onClick={() => scroll("left")} className="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300 text-foreground">
               <ChevronLeft size={20} />
             </button>
