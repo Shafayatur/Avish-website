@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ShoppingBag, Search, Heart, SlidersHorizontal, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -47,6 +47,7 @@ const Shop = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [quickView, setQuickView] = useState<any>(null);
   const { addToCart } = useCart();
+  const navigate = useNavigate();
   const { isInWishlist, toggleWishlist } = useWishlist();
 
   useEffect(() => {
@@ -157,7 +158,7 @@ const Shop = () => {
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {filtered.map((product, i) => (
                 <motion.div key={product.id} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
-                  <div className="group glass-card rounded-2xl overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-500">
+                  <div className="group glass-card rounded-2xl overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-500" onClick={() => navigate(`/product/${product.slug}`)}>
                     <div className="relative overflow-hidden bg-cream aspect-[3/4]">
                       <Link to={`/product/${product.slug}`}>
                         {product.image_url ? (
