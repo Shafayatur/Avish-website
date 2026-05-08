@@ -80,7 +80,7 @@ const Shop = () => {
     });
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden">
       <Navbar />
       <div className="pt-28 pb-20">
         <div className="container mx-auto px-6">
@@ -141,7 +141,7 @@ const Shop = () => {
           <p className="font-body text-xs text-muted-foreground mb-6">{filtered.length} product{filtered.length !== 1 ? "s" : ""} found</p>
 
           {loading ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
               {[1,2,3,4].map(i => (
                 <div key={i} className="glass-card rounded-2xl p-6 animate-pulse">
                   <div className="bg-muted rounded-xl h-64 mb-4" />
@@ -159,7 +159,7 @@ const Shop = () => {
               {filtered.map((product, i) => (
                 <motion.div key={product.id} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
                   <div className="group glass-card rounded-2xl overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-500" onClick={() => navigate(`/product/${product.slug}`)}>
-                    <div className="relative overflow-hidden bg-cream aspect-[3/4]">
+                    <div className="relative overflow-hidden bg-cream aspect-square sm:aspect-[3/4]">
                       <Link to={`/product/${product.slug}`}>
                         {product.image_url ? (
                           <img src={product.image_url} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
