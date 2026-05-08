@@ -1,13 +1,10 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import beautyLook1 from "@/assets/beauty-look-1.jpg";
-import beautyLook2 from "@/assets/beauty-look-2.jpg";
-import beautyLook3 from "@/assets/beauty-look-3.jpg";
 
 const looks = [
-  { image: beautyLook1, title: "Golden Hour Glow", tag: "Trending" },
-  { image: beautyLook2, title: "Rose Petal Romance", tag: "New" },
-  { image: beautyLook3, title: "Natural Radiance", tag: "Classic" },
+  { image: "/beauty-look-1.jpg", title: "Golden Hour Glow", tag: "Trending" },
+  { image: "/beauty-look-2.jpg", title: "Rose Petal Romance", tag: "New" },
+  { image: "/beauty-look-3.jpg", title: "Natural Radiance", tag: "Classic" },
 ];
 
 const BeautyInspiration = () => {
@@ -33,7 +30,6 @@ const BeautyInspiration = () => {
             Beauty <span className="italic text-gradient-rose">Inspiration</span>
           </h2>
         </motion.div>
-
         <div className="grid md:grid-cols-3 gap-8">
           {looks.map((look, i) => (
             <motion.div
