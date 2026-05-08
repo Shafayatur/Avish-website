@@ -34,7 +34,7 @@ const Reviews = () => {
 
   return (
     <section className="py-10 md:py-16 bg-cream relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-glow rounded-full blur-3xl opacity-20" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-glow rounded-full blur-3xl opacity-20" />
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
