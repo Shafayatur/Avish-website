@@ -141,7 +141,7 @@ const Shop = () => {
           <p className="font-body text-xs text-muted-foreground mb-6">{filtered.length} product{filtered.length !== 1 ? "s" : ""} found</p>
 
           {loading ? (
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
               {[1,2,3,4].map(i => (
                 <div key={i} className="glass-card rounded-2xl p-6 animate-pulse">
                   <div className="bg-muted rounded-xl h-64 mb-4" />
@@ -155,7 +155,7 @@ const Shop = () => {
               <p className="font-display text-2xl text-muted-foreground">No products found</p>
             </div>
           ) : (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
               {filtered.map((product, i) => (
                 <motion.div key={product.id} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
                   <div className="group glass-card rounded-2xl overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-500" onClick={() => navigate(`/product/${product.slug}`)}>
