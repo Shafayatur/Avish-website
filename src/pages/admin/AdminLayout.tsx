@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { LayoutDashboard, Package, Tag, ShoppingCart, Users, Image, MessageSquare, LogOut, Menu, X } from "lucide-react";
+import { LayoutDashboard, Package, Tag, ShoppingCart, Users, Image, MessageSquare, LogOut, Menu, X, BarChart2 } from "lucide-react";
 
 const navItems = [
   { label: "Dashboard", path: "/admin", icon: LayoutDashboard },
+  { label: "Analytics", path: "/admin/analytics", icon: BarChart2 },
   { label: "Products", path: "/admin/products", icon: Package },
   { label: "Categories", path: "/admin/categories", icon: Tag },
   { label: "Orders", path: "/admin/orders", icon: ShoppingCart },
