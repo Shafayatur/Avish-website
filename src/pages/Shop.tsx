@@ -92,7 +92,7 @@ const Shop = () => {
           {/* Filters Bar */}
           <div className="flex flex-col gap-4 mb-10">
             <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex gap-2 overflow-x-auto pb-1 flex-nowrap sm:flex-wrap">
                 <Button variant={!selectedCategory ? "default" : "outline"} size="sm" onClick={() => setSelectedCategory(null)} className="rounded-full font-body text-xs tracking-wider">
                   All
                 </Button>

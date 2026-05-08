@@ -120,7 +120,7 @@ const Navbar = () => {
                 <motion.form
                   onSubmit={handleSearch}
                   initial={{ width: 0, opacity: 0 }}
-                  animate={{ width: "200px", opacity: 1 }}
+                  animate={{ width: typeof window !== "undefined" && window.innerWidth < 640 ? "140px" : "200px", opacity: 1 }}
                   exit={{ width: 0, opacity: 0 }}
                   transition={{ duration: 0.3 }}
                   className="overflow-hidden"

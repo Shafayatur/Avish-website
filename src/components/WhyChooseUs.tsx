@@ -34,7 +34,7 @@ const WhyChooseUs = () => {
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
               whileHover={{ y: -8 }}
-              className="glass-card rounded-2xl p-8 text-center"
+              className="glass-card rounded-2xl p-5 md:p-8 text-center"
             >
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
                 <f.icon size={28} className="text-primary" />

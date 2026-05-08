@@ -35,7 +35,7 @@ const Cart = () => {
             <div className="grid lg:grid-cols-3 gap-10">
               <div className="lg:col-span-2 space-y-4">
                 {items.map((item, i) => (
-                  <motion.div key={item.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="glass-card rounded-xl p-4 flex gap-4 items-center">
+                  <motion.div key={item.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="glass-card rounded-xl p-4 flex flex-wrap sm:flex-nowrap gap-4 items-center">
                     <div className="w-20 h-20 rounded-lg bg-cream flex items-center justify-center flex-shrink-0 overflow-hidden">
                       {item.product?.image_url ? (
                         <img src={item.product.image_url} alt={item.product.name} className="max-h-full object-contain" />
@@ -52,7 +52,7 @@ const Cart = () => {
                       <span className="w-8 text-center font-body text-sm">{item.quantity}</span>
                       <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="p-2 hover:text-primary"><Plus size={14} /></button>
                     </div>
-                    <p className="font-display text-lg w-24 text-right">৳{(item.quantity * Number(item.product?.price || 0)).toFixed(2)}</p>
+                    <p className="font-display text-lg sm:w-24 text-right ml-auto sm:ml-0">৳{(item.quantity * Number(item.product?.price || 0)).toFixed(2)}</p>
                     <button onClick={() => removeFromCart(item.id)} className="text-muted-foreground hover:text-destructive transition-colors p-2">
                       <Trash2 size={16} />
                     </button>

@@ -8,9 +8,9 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-foreground text-background py-20">
+    <footer className="bg-foreground text-background py-12 md:py-20">
       <div className="container mx-auto px-6">
-        <div className="grid md:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           <div>
             <h3 className="font-display text-3xl tracking-[0.2em] mb-6">AVISH</h3>
             <p className="font-body text-sm text-background/60 leading-relaxed">

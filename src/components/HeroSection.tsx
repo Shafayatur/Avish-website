@@ -12,7 +12,7 @@ const HeroSection = () => {
       <motion.img
         src="/lipstick.png"
         alt="Floating lipstick"
-        className="absolute top-20 right-[15%] w-24 md:w-32 pointer-events-none"
+        className="absolute top-20 right-[15%] w-24 md:w-32 pointer-events-none hidden sm:block"
         animate={{ y: [0, -15, -8, 0], rotate: [0, 2, -1, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         loading="eager"
@@ -22,7 +22,7 @@ const HeroSection = () => {
       <motion.img
         src="/brush.png"
         alt="Floating brush"
-        className="absolute bottom-32 left-[10%] w-20 md:w-28 pointer-events-none"
+        className="absolute bottom-32 left-[10%] w-20 md:w-28 pointer-events-none hidden sm:block"
         animate={{ y: [0, -20, -5, 0], rotate: [0, -3, 2, 0] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
         loading="eager"
@@ -69,7 +69,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="font-display text-6xl md:text-8xl lg:text-9xl font-light tracking-[0.15em] mb-6"
+            className="font-display text-5xl md:text-8xl lg:text-9xl font-light tracking-[0.15em] mb-6"
           >
             <span className="text-gradient-rose">Avish</span>
           </motion.h1>
