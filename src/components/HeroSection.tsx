@@ -1,22 +1,16 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import heroImage from "@/assets/hero-cosmetics.jpg";
-import lipstick from "@/assets/lipstick.png";
-import brush from "@/assets/brush.png";
-import compact from "@/assets/compact.png";
 import perfume from "@/assets/perfume.png";
 
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen bg-hero-gradient overflow-hidden flex items-center">
-      {/* Glow orbs */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-glow rounded-full blur-3xl opacity-40" />
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-glow rounded-full blur-3xl opacity-30" />
 
-      {/* Floating cosmetic items */}
       <motion.img
-        src={lipstick}
+        src="/lipstick.png"
         alt="Floating lipstick"
         className="absolute top-20 right-[15%] w-24 md:w-32 pointer-events-none"
         animate={{ y: [0, -15, -8, 0], rotate: [0, 2, -1, 0] }}
@@ -26,7 +20,7 @@ const HeroSection = () => {
         height={768}
       />
       <motion.img
-        src={brush}
+        src="/brush.png"
         alt="Floating brush"
         className="absolute bottom-32 left-[10%] w-20 md:w-28 pointer-events-none"
         animate={{ y: [0, -20, -5, 0], rotate: [0, -3, 2, 0] }}
@@ -36,7 +30,7 @@ const HeroSection = () => {
         height={768}
       />
       <motion.img
-        src={compact}
+        src="/compact.png"
         alt="Floating compact"
         className="absolute top-1/3 left-[5%] w-16 md:w-24 pointer-events-none hidden md:block"
         animate={{ y: [0, -25, 0], rotate: [0, 5, 0] }}
@@ -52,8 +46,8 @@ const HeroSection = () => {
         animate={{ y: [0, -18, -6, 0], rotate: [0, -2, 3, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
         loading="lazy"
-        width={256}
-        height={256}
+        width={512}
+        height={768}
       />
 
       <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
@@ -109,7 +103,7 @@ const HeroSection = () => {
         >
           <div className="relative rounded-3xl overflow-hidden shadow-2xl">
             <img
-              src={heroImage}
+              src="/hero-cosmetics.jpg"
               alt="Avish luxury cosmetics collection"
               className="w-full h-auto object-cover"
               width={1920}
@@ -120,7 +114,6 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
       <motion.div
         className="absolute bottom-10 left-1/2 -translate-x-1/2"
         animate={{ y: [0, 10, 0] }}
