@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ShoppingBag, User, Heart, Sun, Moon, Search } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
@@ -18,6 +18,7 @@ const Navbar = () => {
   const { totalItems: wishlistCount } = useWishlist();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -41,10 +42,29 @@ const Navbar = () => {
     }
   };
 
+  const handleAbout = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (location.pathname === "/") {
+      document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate("/");
+      setTimeout(() => {
+        document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+      }, 500);
+    }
+    setMenuOpen(false);
+  };
+
+  const isActive = (href: string) => {
+    if (href === "/") return location.pathname === "/";
+    if (href.includes("?")) return location.pathname === href.split("?")[0];
+    return location.pathname.startsWith(href);
+  };
+
   const links = [
     { label: "Home", href: "/" },
     { label: "Products", href: "/shop" },
-    { label: "New Arrivals", href: "/shop?sort=newest" },
+    { label: "New Arrivals", href: "/new-arrivals" },
     { label: "Categories", href: "/categories" },
     { label: "About", href: "/#about" },
   ];
@@ -66,20 +86,34 @@ const Navbar = () => {
         {/* Desktop links */}
         <div className="hidden lg:flex items-center gap-8">
           {links.map((link) => (
-            <Link
-              key={link.label}
-              to={link.href}
-              className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors duration-300 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
-            >
-              {link.label}
-            </Link>
+            link.href === "/#about" ? (
+              <a
+                key={link.label}
+                href="/#about"
+                onClick={handleAbout}
+                className="font-body text-xs tracking-[0.2em] uppercase transition-colors duration-300 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:h-[1px] after:bg-primary after:transition-all after:duration-300 text-muted-foreground hover:text-primary after:w-0 hover:after:w-full"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.label}
+                to={link.href}
+                className={`font-body text-xs tracking-[0.2em] uppercase transition-colors duration-300 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:h-[1px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full ${
+                  isActive(link.href)
+                    ? "text-primary after:w-full"
+                    : "text-muted-foreground hover:text-primary after:w-0"
+                }`}
+              >
+                {link.label}
+              </Link>
+            )
           ))}
         </div>
 
         {/* Right icons */}
         <div className="flex items-center gap-1 md:gap-2">
-
-          {/* Search icon + expandable bar */}
+          {/* Search */}
           <div className="flex items-center">
             <AnimatePresence>
               {searchOpen && (
@@ -173,18 +207,39 @@ const Navbar = () => {
               </form>
 
               {links.map((link) => (
-                <Link key={link.label} to={link.href} onClick={() => setMenuOpen(false)} className="font-body text-sm tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors">
-                  {link.label}
-                </Link>
+                link.href === "/#about" ? (
+              <a
+                  
+                    key={link.label}
+                    href="/#about"
+                    onClick={handleAbout}
+                    className={`font-body text-sm tracking-[0.2em] uppercase transition-colors ${
+                      isActive(link.href) ? "text-primary" : "text-muted-foreground hover:text-primary"
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.label}
+                    to={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className={`font-body text-sm tracking-[0.2em] uppercase transition-colors ${
+                      isActive(link.href) ? "text-primary" : "text-muted-foreground hover:text-primary"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                )
               ))}
-              <Link to="/wishlist" onClick={() => setMenuOpen(false)} className="font-body text-sm tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors">Wishlist</Link>
+              <Link to="/wishlist" onClick={() => setMenuOpen(false)} className={`font-body text-sm tracking-[0.2em] uppercase transition-colors ${isActive("/wishlist") ? "text-primary" : "text-muted-foreground hover:text-primary"}`}>Wishlist</Link>
               {user ? (
                 <>
-                  <Link to="/orders" onClick={() => setMenuOpen(false)} className="font-body text-sm tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors">My Orders</Link>
-                  <Link to="/profile" onClick={() => setMenuOpen(false)} className="font-body text-sm tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors">Profile</Link>
+                  <Link to="/orders" onClick={() => setMenuOpen(false)} className={`font-body text-sm tracking-[0.2em] uppercase transition-colors ${isActive("/orders") ? "text-primary" : "text-muted-foreground hover:text-primary"}`}>My Orders</Link>
+                  <Link to="/profile" onClick={() => setMenuOpen(false)} className={`font-body text-sm tracking-[0.2em] uppercase transition-colors ${isActive("/profile") ? "text-primary" : "text-muted-foreground hover:text-primary"}`}>Profile</Link>
                 </>
               ) : (
-                <Link to="/auth" onClick={() => setMenuOpen(false)} className="font-body text-sm tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors">Sign In</Link>
+                <Link to="/auth" onClick={() => setMenuOpen(false)} className={`font-body text-sm tracking-[0.2em] uppercase transition-colors ${isActive("/auth") ? "text-primary" : "text-muted-foreground hover:text-primary"}`}>Sign In</Link>
               )}
             </div>
           </motion.div>

@@ -19,6 +19,7 @@ import Orders from "./pages/Orders";
 import Profile from "./pages/Profile";
 import Wishlist from "./pages/Wishlist";
 import Categories from "./pages/Categories";
+import NewArrivalsPage from "./pages/NewArrivals";
 import AdminLayout from "./pages/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts";
@@ -52,6 +53,7 @@ const App = () => (
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/wishlist" element={<Wishlist />} />
                   <Route path="/categories" element={<Categories />} />
+                  <Route path="/new-arrivals" element={<NewArrivalsPage />} />
                   <Route path="/admin" element={<AdminLayout />}>
                     <Route index element={<AdminDashboard />} />
                     <Route path="products" element={<AdminProducts />} />
