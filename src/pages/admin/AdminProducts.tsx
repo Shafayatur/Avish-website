@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Pencil, Trash2, X, Upload, Search, ChevronLeft, ChevronRight, Video, Eye, ToggleLeft, ToggleRight } from "lucide-react";
+import { Plus, Pencil, Trash2, X, Upload, Search, ChevronLeft, ChevronRight, Eye, ToggleLeft, ToggleRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import usePageTitle from "@/hooks/usePageTitle";
 
@@ -35,6 +35,21 @@ const emptyProduct = {
 };
 
 const PAGE_SIZE = 10;
+
+const getYouTubeId = (url: string): string | null => {
+  if (!url) return null;
+  const patterns = [
+    /youtube\.com\/watch\?v=([^&]+)/,
+    /youtu\.be\/([^?]+)/,
+    /youtube\.com\/embed\/([^?]+)/,
+    /youtube\.com\/shorts\/([^?]+)/,
+  ];
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) return match[1];
+  }
+  return null;
+};
 
 // Confirm Modal
 const ConfirmModal = ({ open, onConfirm, onCancel, productName }: { open: boolean; onConfirm: () => void; onCancel: () => void; productName: string }) => (
@@ -76,7 +91,6 @@ const AdminProducts = () => {
   const [editing, setEditing] = useState<Product | typeof emptyProduct | null>(null);
   const [isNew, setIsNew] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [uploadingVideo, setUploadingVideo] = useState(false);
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "active" | "inactive">("all");
@@ -132,22 +146,6 @@ const AdminProducts = () => {
     setUploading(false);
   };
 
-  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file || !editing) return;
-    setUploadingVideo(true);
-    const ext = file.name.split(".").pop();
-    const path = `videos/${Date.now()}.${ext}`;
-    const { error } = await supabase.storage.from("product-images").upload(path, file, { contentType: file.type });
-    if (error) {
-      toast({ title: "Video upload failed", description: error.message, variant: "destructive" });
-    } else {
-      const { data: { publicUrl } } = supabase.storage.from("product-images").getPublicUrl(path);
-      setEditing({ ...editing, video_url: publicUrl });
-      toast({ title: "Video uploaded!" });
-    }
-    setUploadingVideo(false);
-  };
 
   const removeAdditionalImage = (index: number) => {
     if (!editing) return;
@@ -482,32 +480,30 @@ const AdminProducts = () => {
                       </div>
                     </div>
 
-                    {/* Video Upload */}
+                    {/* YouTube Video */}
                     <div>
-                      <Label className="font-body text-xs tracking-widest uppercase">Product Video / GIF</Label>
+                      <Label className="font-body text-xs tracking-widest uppercase">YouTube Video (optional)</Label>
                       <div className="mt-2 space-y-2">
-                        {editing.video_url && (
-                          <div className="flex items-center gap-2 p-2 bg-muted rounded-lg">
-                            <Video size={14} className="text-primary flex-shrink-0" />
-                            <span className="font-body text-xs text-muted-foreground truncate flex-1">{editing.video_url.split("/").pop()}</span>
-                            <button onClick={() => setEditing({ ...editing, video_url: null })} className="p-1 hover:text-destructive transition-colors flex-shrink-0">
-                              <X size={12} />
-                            </button>
-                          </div>
-                        )}
-                        <div className="flex gap-2">
-                          <label className="cursor-pointer flex items-center gap-2 px-4 py-2 rounded-xl border border-dashed border-border hover:border-primary transition-colors flex-1 justify-center">
-                            <Upload size={14} />
-                            <span className="font-body text-sm">{uploadingVideo ? "Uploading..." : "Upload Video/GIF"}</span>
-                            <input type="file" accept="video/*,image/gif" onChange={handleVideoUpload} className="hidden" disabled={uploadingVideo} />
-                          </label>
-                        </div>
                         <Input
                           value={editing.video_url || ""}
                           onChange={e => setEditing({ ...editing, video_url: e.target.value || null })}
-                          placeholder="Or paste video URL..."
+                          placeholder="https://www.youtube.com/watch?v=... or youtu.be/..."
                           className="rounded-xl text-xs"
                         />
+                        {editing.video_url && getYouTubeId(editing.video_url) && (
+                          <div className="rounded-xl overflow-hidden aspect-video bg-black">
+                            <iframe
+                              src={"https://www.youtube.com/embed/" + getYouTubeId(editing.video_url)}
+                              className="w-full h-full"
+                              allowFullScreen
+                              title="Product video preview"
+                            />
+                          </div>
+                        )}
+                        {editing.video_url && !getYouTubeId(editing.video_url) && (
+                          <p className="font-body text-xs text-destructive">Invalid YouTube URL</p>
+                        )}
+                        <p className="font-body text-xs text-muted-foreground">Paste any YouTube link — it will be embedded on the product page</p>
                       </div>
                     </div>
                   </div>

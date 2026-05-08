@@ -24,6 +24,21 @@ interface Review {
   is_approved: boolean;
 }
 
+const getYouTubeId = (url: string): string | null => {
+  if (!url) return null;
+  const patterns = [
+    /youtube\.com\/watch\?v=([^&]+)/,
+    /youtu\.be\/([^?]+)/,
+    /youtube\.com\/embed\/([^?]+)/,
+    /youtube\.com\/shorts\/([^?]+)/,
+  ];
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) return match[1];
+  }
+  return null;
+};
+
 const ProductDetail = () => {
   const { slug } = useParams();
   const [product, setProduct] = useState<any>(null);
@@ -153,7 +168,15 @@ const ProductDetail = () => {
                       exit={{ opacity: 0 }}
                       className="w-full h-full"
                     >
-                      {videoUrl.match(/\.(gif)$/i) ? (
+                      {getYouTubeId(videoUrl) ? (
+                        <iframe
+                          src={"https://www.youtube.com/embed/" + getYouTubeId(videoUrl) + "?autoplay=1&rel=0"}
+                          className="w-full h-full"
+                          allowFullScreen
+                          allow="autoplay"
+                          title="Product video"
+                        />
+                      ) : videoUrl.match(/\.(gif)$/i) ? (
                         <img src={videoUrl} alt="Product preview" className="w-full h-full object-contain" />
                       ) : (
                         <video src={videoUrl} controls autoPlay className="w-full h-full object-contain" muted loop playsInline />
@@ -238,7 +261,13 @@ const ProductDetail = () => {
                         showVideo ? "border-primary ring-2 ring-primary/20" : "border-transparent hover:border-primary/40"
                       }`}
                     >
-                      {videoUrl.match(/\.(gif)$/i) ? (
+                      {getYouTubeId(videoUrl) ? (
+                        <img
+                          src={"https://img.youtube.com/vi/" + getYouTubeId(videoUrl) + "/mqdefault.jpg"}
+                          alt="Video thumbnail"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : videoUrl.match(/\.(gif)$/i) ? (
                         <img src={videoUrl} alt="GIF preview" className="w-full h-full object-cover" />
                       ) : (
                         <div className="w-full h-full bg-foreground/10 flex items-center justify-center">
