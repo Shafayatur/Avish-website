@@ -3,13 +3,13 @@ import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import CategoryShowcase from "@/components/CategoryShowcase";
-import BestSellers from "@/components/BestSellers";
-import ShowStopper from "@/components/ShowStopper";
 import NewArrivals from "@/components/NewArrivals";
+import ShowStopper from "@/components/ShowStopper";
+import BestSellers from "@/components/BestSellers";
 import PromoBanner from "@/components/PromoBanner";
-import BeautyInspiration from "@/components/BeautyInspiration";
-import Reviews from "@/components/Reviews";
 import WhyChooseUs from "@/components/WhyChooseUs";
+import Reviews from "@/components/Reviews";
+import BeautyInspiration from "@/components/BeautyInspiration";
 import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
 
@@ -21,13 +21,13 @@ const Index = () => {
       <AboutSection />
       <FeaturedProducts />
       <CategoryShowcase />
-      <ShowStopper />
       <NewArrivals />
+      <ShowStopper />
       <BestSellers />
       <PromoBanner />
-      <BeautyInspiration />
-      <Reviews />
       <WhyChooseUs />
+      <Reviews />
+      <BeautyInspiration />
       <Newsletter />
       <Footer />
     </div>
