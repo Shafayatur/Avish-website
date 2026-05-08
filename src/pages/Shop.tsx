@@ -38,7 +38,7 @@ const Shop = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(searchParams.get("category"));
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(searchParams.get("search") || "");
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState<SortOption>((searchParams.get("sort") as SortOption) || "newest");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);

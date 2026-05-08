@@ -44,6 +44,16 @@ const HeroSection = () => {
         width={512}
         height={512}
       />
+      <motion.img
+        src="/logo.png"
+        alt="Avish logo floating"
+        className="absolute bottom-24 right-[8%] w-20 md:w-28 pointer-events-none hidden md:block"
+        animate={{ y: [0, -18, -6, 0], rotate: [0, -2, 3, 0] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+        loading="lazy"
+        width={256}
+        height={256}
+      />
 
       <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
         <motion.div
