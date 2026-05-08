@@ -15,7 +15,7 @@ const HeroSection = () => {
         className="absolute top-20 right-[15%] w-24 md:w-32 pointer-events-none"
         animate={{ y: [0, -15, -8, 0], rotate: [0, 2, -1, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        loading="lazy"
+        loading="eager"
         width={512}
         height={768}
       />
@@ -25,7 +25,7 @@ const HeroSection = () => {
         className="absolute bottom-32 left-[10%] w-20 md:w-28 pointer-events-none"
         animate={{ y: [0, -20, -5, 0], rotate: [0, -3, 2, 0] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        loading="lazy"
+        loading="eager"
         width={512}
         height={768}
       />
@@ -35,7 +35,7 @@ const HeroSection = () => {
         className="absolute top-1/3 left-[5%] w-16 md:w-24 pointer-events-none hidden md:block"
         animate={{ y: [0, -25, 0], rotate: [0, 5, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        loading="lazy"
+        loading="eager"
         width={512}
         height={512}
       />
@@ -45,7 +45,7 @@ const HeroSection = () => {
         className="absolute bottom-24 right-[8%] w-20 md:w-28 pointer-events-none hidden md:block"
         animate={{ y: [0, -18, -6, 0], rotate: [0, -2, 3, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-        loading="lazy"
+        loading="eager"
         width={512}
         height={768}
       />
@@ -108,6 +108,7 @@ const HeroSection = () => {
               className="w-full h-auto object-cover"
               width={1920}
               height={1080}
+              loading="eager"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent" />
           </div>
