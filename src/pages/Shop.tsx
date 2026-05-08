@@ -91,18 +91,18 @@ const Shop = () => {
 
           {/* Filters Bar */}
           <div className="flex flex-col gap-4 mb-10">
-            <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide w-full">
                 <Button variant={!selectedCategory ? "default" : "outline"} size="sm" onClick={() => setSelectedCategory(null)} className="rounded-full font-body text-xs tracking-wider flex-shrink-0">
                   All
                 </Button>
                 {categories.map(cat => (
-                  <Button key={cat.id} variant={selectedCategory === cat.id ? "default" : "outline"} size="sm" onClick={() => setSelectedCategory(cat.id)} className="rounded-full font-body text-xs tracking-wider">
+                  <Button key={cat.id} variant={selectedCategory === cat.id ? "default" : "outline"} size="sm" onClick={() => setSelectedCategory(cat.id)} className="rounded-full font-body text-xs tracking-wider flex-shrink-0">
                     {cat.name}
                   </Button>
                 ))}
               </div>
-              <div className="flex gap-3 items-center">
+              <div className="flex gap-3 items-center w-full">
                 <div className="relative w-full md:w-56">
                   <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                   <Input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search..." className="pl-10 rounded-full" />
