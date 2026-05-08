@@ -34,7 +34,7 @@ const NewArrivalsPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen overflow-x-hidden">
+    <div className="min-h-screen">
       <Navbar />
       <div className="pt-28 pb-20">
         <div className="container mx-auto px-6">

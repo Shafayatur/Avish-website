@@ -92,8 +92,8 @@ const Shop = () => {
           {/* Filters Bar */}
           <div className="flex flex-col gap-4 mb-10">
             <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-              <div className="flex gap-2 overflow-x-auto pb-1 flex-nowrap sm:flex-wrap">
-                <Button variant={!selectedCategory ? "default" : "outline"} size="sm" onClick={() => setSelectedCategory(null)} className="rounded-full font-body text-xs tracking-wider">
+              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+                <Button variant={!selectedCategory ? "default" : "outline"} size="sm" onClick={() => setSelectedCategory(null)} className="rounded-full font-body text-xs tracking-wider flex-shrink-0">
                   All
                 </Button>
                 {categories.map(cat => (
@@ -141,7 +141,7 @@ const Shop = () => {
           <p className="font-body text-xs text-muted-foreground mb-6">{filtered.length} product{filtered.length !== 1 ? "s" : ""} found</p>
 
           {loading ? (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
               {[1,2,3,4].map(i => (
                 <div key={i} className="glass-card rounded-2xl p-6 animate-pulse">
                   <div className="bg-muted rounded-xl h-64 mb-4" />
