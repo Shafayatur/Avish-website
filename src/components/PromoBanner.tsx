@@ -40,7 +40,7 @@ const PromoBanner = () => {
   const banner = banners[current];
 
   return (
-    <section className="py-8 md:py-16 relative overflow-hidden">
+    <section className="py-10 md:py-16 relative overflow-hidden">
       <div className="container mx-auto px-6">
         <div className="relative rounded-3xl overflow-hidden min-h-[400px] md:min-h-[500px]">
           {/* Background image with parallax */}

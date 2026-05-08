@@ -36,7 +36,7 @@ const BestSellers = () => {
   };
 
   return (
-    <section className="py-24 md:py-16 md:py-20 relative overflow-hidden">
+    <section className="py-10 md:py-16 relative overflow-hidden">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

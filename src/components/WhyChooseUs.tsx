@@ -10,7 +10,7 @@ const features = [
 
 const WhyChooseUs = () => {
   return (
-    <section className="py-14 md:py-20 relative overflow-hidden">
+    <section className="py-10 md:py-16 relative overflow-hidden">
       <div className="absolute inset-0 bg-glow opacity-20" />
       <div className="container mx-auto px-6 relative z-10">
         <motion.div

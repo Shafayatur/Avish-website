@@ -120,7 +120,7 @@ const FeaturedProducts = () => {
   if (products.length === 0) return null;
 
   return (
-    <section id="shop" className="py-24 md:py-16 md:py-20 relative">
+    <section id="shop" className="py-10 md:py-16 relative">
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
