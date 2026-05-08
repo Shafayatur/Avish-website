@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
+import usePageTitle from "@/hooks/usePageTitle";
 const AdminCustomers = () => {
+  usePageTitle("Admin — Customers");
   const [profiles, setProfiles] = useState<any[]>([]);
 
   useEffect(() => {

@@ -16,7 +16,9 @@ const StatCard = ({ icon: Icon, label, value, color }: { icon: any; label: strin
   </div>
 );
 
+import usePageTitle from "@/hooks/usePageTitle";
 const AdminDashboard = () => {
+  usePageTitle("Admin — Dashboard");
   const [stats, setStats] = useState({ products: 0, orders: 0, customers: 0, revenue: 0 });
   const [recentOrders, setRecentOrders] = useState<any[]>([]);
 

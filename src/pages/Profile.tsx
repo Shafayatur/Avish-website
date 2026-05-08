@@ -11,7 +11,9 @@ import Footer from "@/components/Footer";
 import { User, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+import usePageTitle from "@/hooks/usePageTitle";
 const Profile = () => {
+  usePageTitle("My Profile");
   const { user, signOut } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();

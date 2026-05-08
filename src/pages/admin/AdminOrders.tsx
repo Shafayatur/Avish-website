@@ -11,7 +11,9 @@ const statusColors: Record<string, string> = {
   cancelled: "bg-red-100 text-red-800",
 };
 
+import usePageTitle from "@/hooks/usePageTitle";
 const AdminOrders = () => {
+  usePageTitle("Admin — Orders");
   const [orders, setOrders] = useState<any[]>([]);
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
   const { toast } = useToast();

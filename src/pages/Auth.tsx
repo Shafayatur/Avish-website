@@ -8,7 +8,9 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Eye, EyeOff } from "lucide-react";
 
+import usePageTitle from "@/hooks/usePageTitle";
 const Auth = () => {
+  usePageTitle("Sign In / Sign Up");
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

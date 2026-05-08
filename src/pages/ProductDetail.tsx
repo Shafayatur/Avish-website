@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import usePageTitle from "@/hooks/usePageTitle";
 import { useParams, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag, Minus, Plus, ArrowLeft, Star, Truck, Shield, RotateCcw, Heart, Play, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
@@ -26,6 +27,7 @@ interface Review {
 const ProductDetail = () => {
   const { slug } = useParams();
   const [product, setProduct] = useState<any>(null);
+  usePageTitle(product?.name || "Product");
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [reviews, setReviews] = useState<Review[]>([]);

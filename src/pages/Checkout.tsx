@@ -12,7 +12,9 @@ import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+import usePageTitle from "@/hooks/usePageTitle";
 const Checkout = () => {
+  usePageTitle("Checkout");
   const { items, totalPrice, clearCart } = useCart();
   const { user } = useAuth();
   const { toast } = useToast();

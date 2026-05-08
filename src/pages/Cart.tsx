@@ -7,7 +7,9 @@ import { useAuth } from "@/hooks/useAuth";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+import usePageTitle from "@/hooks/usePageTitle";
 const Cart = () => {
+  usePageTitle("Your Cart");
   const { items, loading, updateQuantity, removeFromCart, totalPrice } = useCart();
   const { user } = useAuth();
   const shipping = totalPrice >= 500 ? 0 : 60;

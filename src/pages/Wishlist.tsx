@@ -8,7 +8,9 @@ import { useAuth } from "@/hooks/useAuth";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+import usePageTitle from "@/hooks/usePageTitle";
 const Wishlist = () => {
+  usePageTitle("My Wishlist");
   const { items, toggleWishlist } = useWishlist();
   const { addToCart } = useCart();
   const { user } = useAuth();

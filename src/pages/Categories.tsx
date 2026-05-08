@@ -6,7 +6,9 @@ import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+import usePageTitle from "@/hooks/usePageTitle";
 const Categories = () => {
+  usePageTitle("Categories");
   const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {

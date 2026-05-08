@@ -9,7 +9,9 @@ import { useToast } from "@/hooks/use-toast";
 import { Shield, Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
+import usePageTitle from "@/hooks/usePageTitle";
 const AdminLogin = () => {
+  usePageTitle("Admin Login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);

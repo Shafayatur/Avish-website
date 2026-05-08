@@ -31,7 +31,9 @@ const emptyProduct = {
   is_featured: false, is_best_seller: false, is_active: true, is_show_stopper: false,
 };
 
+import usePageTitle from "@/hooks/usePageTitle";
 const AdminProducts = () => {
+  usePageTitle("Admin — Products");
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
   const [editing, setEditing] = useState<Product | typeof emptyProduct | null>(null);

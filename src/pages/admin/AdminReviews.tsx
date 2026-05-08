@@ -15,7 +15,9 @@ interface Review {
   product?: { name: string } | null;
 }
 
+import usePageTitle from "@/hooks/usePageTitle";
 const AdminReviews = () => {
+  usePageTitle("Admin — Reviews");
   const [reviews, setReviews] = useState<Review[]>([]);
   const [filter, setFilter] = useState<"all" | "pending" | "approved">("all");
   const { toast } = useToast();

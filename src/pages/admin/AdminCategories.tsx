@@ -6,7 +6,9 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, Pencil, Trash2, X, Upload } from "lucide-react";
 
+import usePageTitle from "@/hooks/usePageTitle";
 const AdminCategories = () => {
+  usePageTitle("Admin — Categories");
   const [categories, setCategories] = useState<any[]>([]);
   const [editing, setEditing] = useState<any>(null);
   const [isNew, setIsNew] = useState(false);

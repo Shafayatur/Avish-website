@@ -33,7 +33,9 @@ interface Category {
 
 type SortOption = "newest" | "price-low" | "price-high" | "name";
 
+import usePageTitle from "@/hooks/usePageTitle";
 const Shop = () => {
+  usePageTitle("Shop — Our Collection");
   const [searchParams] = useSearchParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);

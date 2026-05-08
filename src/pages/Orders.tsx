@@ -15,7 +15,9 @@ const statusColors: Record<string, string> = {
   cancelled: "bg-red-100 text-red-800",
 };
 
+import usePageTitle from "@/hooks/usePageTitle";
 const Orders = () => {
+  usePageTitle("My Orders");
   const { user } = useAuth();
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
