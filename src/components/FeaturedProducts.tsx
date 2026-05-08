@@ -85,12 +85,20 @@ const ProductCard = ({ product, index }: { product: any; index: number }) => {
               {product.category_name || "Beauty"}
             </p>
             <h3 className="font-display text-sm md:text-base mb-1.5 line-clamp-1 text-foreground">{product.name}</h3>
-            <div className="flex items-baseline gap-2">
+            <div className="flex items-baseline gap-2 mb-3">
               <span className="font-display text-base md:text-lg text-primary">৳{Number(product.price).toFixed(0)}</span>
               {product.compare_at_price && (
                 <span className="font-body text-xs text-muted-foreground line-through">৳{Number(product.compare_at_price).toFixed(0)}</span>
               )}
             </div>
+            <button
+              onClick={e => { e.preventDefault(); e.stopPropagation(); addToCart(product.id); }}
+              disabled={product.stock < 1}
+              className="w-full py-2 rounded-full bg-primary text-primary-foreground font-body text-xs tracking-widest uppercase hover:bg-primary/90 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              <ShoppingBag size={12} />
+              {product.stock < 1 ? "Out of Stock" : "Add to Cart"}
+            </button>
           </div>
         </Link>
       </motion.div>

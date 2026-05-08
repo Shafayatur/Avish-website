@@ -118,12 +118,20 @@ const NewArrivals = () => {
                       {product.category_name || "New"}
                     </p>
                     <h3 className="font-display text-sm md:text-base hover:text-primary transition-colors line-clamp-1 text-foreground">{product.name}</h3>
-                    <div className="flex items-center gap-2 mt-1">
+                    <div className="flex items-center gap-2 mt-1 mb-3">
                       <span className="font-display text-base md:text-lg text-primary">৳{Number(product.price).toFixed(0)}</span>
                       {product.compare_at_price && product.compare_at_price > product.price && (
                         <span className="font-body text-xs text-muted-foreground line-through">৳{Number(product.compare_at_price).toFixed(0)}</span>
                       )}
                     </div>
+                    <button
+                      onClick={e => { e.preventDefault(); e.stopPropagation(); addToCart(product.id); }}
+                      disabled={product.stock < 1}
+                      className="w-full py-2 rounded-full bg-primary text-primary-foreground font-body text-xs tracking-widest uppercase hover:bg-primary/90 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                    >
+                      <ShoppingBag size={12} />
+                      {product.stock < 1 ? "Out of Stock" : "Add to Cart"}
+                    </button>
                   </div>
                 </Link>
               </motion.div>

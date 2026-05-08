@@ -196,19 +196,27 @@ const Shop = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="p-5">
+                    <div className="p-4">
                       <p className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-1">
                         {(product.categories as any)?.name || "Uncategorized"}
                       </p>
                       <Link to={`/product/${product.slug}`}>
-                        <h3 className="font-display text-xl mb-2 hover:text-primary transition-colors line-clamp-1">{product.name}</h3>
+                        <h3 className="font-display text-base md:text-lg mb-1 hover:text-primary transition-colors line-clamp-1">{product.name}</h3>
                       </Link>
-                      <div className="flex items-center gap-2">
-                        <span className="font-display text-2xl text-primary">৳{Number(product.price).toFixed(2)}</span>
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="font-display text-lg text-primary">৳{Number(product.price).toFixed(0)}</span>
                         {product.compare_at_price && (
-                          <span className="font-body text-sm text-muted-foreground line-through">৳{Number(product.compare_at_price).toFixed(2)}</span>
+                          <span className="font-body text-xs text-muted-foreground line-through">৳{Number(product.compare_at_price).toFixed(0)}</span>
                         )}
                       </div>
+                      <button
+                        onClick={e => { e.stopPropagation(); addToCart(product.id); }}
+                        disabled={product.stock < 1}
+                        className="w-full py-2 rounded-full bg-primary text-primary-foreground font-body text-xs tracking-widest uppercase hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      >
+                        <ShoppingBag size={12} />
+                        {product.stock < 1 ? "Out of Stock" : "Add to Cart"}
+                      </button>
                     </div>
                   </div>
                 </motion.div>
