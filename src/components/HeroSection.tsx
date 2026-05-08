@@ -12,7 +12,7 @@ const HeroSection = () => {
       <motion.img
         src="/lipstick.png"
         alt="Floating lipstick"
-        className="absolute top-20 right-[15%] w-24 md:w-32 pointer-events-none hidden sm:block"
+        className="absolute top-24 right-[2%] w-12 sm:w-16 lg:w-28 pointer-events-none"
         animate={{ y: [0, -15, -8, 0], rotate: [0, 2, -1, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         loading="eager"
@@ -22,7 +22,7 @@ const HeroSection = () => {
       <motion.img
         src="/brush.png"
         alt="Floating brush"
-        className="absolute bottom-32 left-[10%] w-20 md:w-28 pointer-events-none hidden sm:block"
+        className="absolute bottom-24 left-[2%] w-10 sm:w-14 lg:w-24 pointer-events-none"
         animate={{ y: [0, -20, -5, 0], rotate: [0, -3, 2, 0] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
         loading="eager"
@@ -32,7 +32,7 @@ const HeroSection = () => {
       <motion.img
         src="/compact.png"
         alt="Floating compact"
-        className="absolute top-1/3 left-[5%] w-16 md:w-24 pointer-events-none hidden md:block"
+        className="absolute top-1/3 left-[1%] w-8 sm:w-12 lg:w-24 pointer-events-none"
         animate={{ y: [0, -25, 0], rotate: [0, 5, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
         loading="eager"
@@ -42,7 +42,7 @@ const HeroSection = () => {
       <motion.img
         src={perfume}
         alt="Floating perfume"
-        className="absolute bottom-24 right-[8%] w-20 md:w-28 pointer-events-none hidden md:block"
+        className="absolute bottom-16 right-[2%] w-10 sm:w-14 lg:w-24 pointer-events-none"
         animate={{ y: [0, -18, -6, 0], rotate: [0, -2, 3, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
         loading="eager"
