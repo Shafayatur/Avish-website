@@ -476,7 +476,7 @@ const AdminProducts = () => {
                         {(editing.images || []).length < 5 && (
                           <label className="cursor-pointer w-14 h-14 rounded-lg border border-dashed border-border hover:border-primary flex items-center justify-center transition-colors">
                             <Plus size={16} className="text-muted-foreground" />
-                            <input type="file" accept="image/*" onChange={e => handleImageUpload(e, true)} className="hidden" disabled={uploading} />
+                            <input type="file" accept="image/*" multiple onChange={e => handleImageUpload(e, true)} className="hidden" disabled={uploading} />
                           </label>
                         )}
                       </div>
