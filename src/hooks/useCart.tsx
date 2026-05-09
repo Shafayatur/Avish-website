@@ -26,6 +26,8 @@ interface CartContextType {
   totalItems: number;
   totalPrice: number;
   refreshCart: () => Promise<void>;
+  sidebarOpen: boolean;
+  setSidebarOpen: (open: boolean) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -47,6 +49,7 @@ const clearGuestCart = () => localStorage.removeItem(GUEST_CART_KEY);
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [items, setItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user } = useAuth();
   const { toast } = useToast();
 
@@ -120,6 +123,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         await supabase.from("cart_items").insert({ user_id: user.id, product_id: productId, quantity });
       }
       toast({ title: "Added to cart!" });
+      setSidebarOpen(true);
       await fetchDbCart();
     } else {
       const guest = getGuestCart();
@@ -127,6 +131,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       if (existing) { existing.quantity += quantity; } else { guest.push({ product_id: productId, quantity }); }
       setGuestCart(guest);
       toast({ title: "Added to cart!" });
+      setSidebarOpen(true);
       await fetchGuestCartWithProducts();
     }
   };
@@ -172,7 +177,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const totalPrice = items.reduce((sum, i) => sum + i.quantity * Number(i.product?.price || 0), 0);
 
   return (
-    <CartContext.Provider value={{ items, loading, addToCart, removeFromCart, updateQuantity, clearCart, totalItems, totalPrice, refreshCart: fetchCart }}>
+    <CartContext.Provider value={{ items, loading, addToCart, removeFromCart, updateQuantity, clearCart, totalItems, totalPrice, refreshCart: fetchCart, sidebarOpen, setSidebarOpen }}>
       {children}
     </CartContext.Provider>
   );

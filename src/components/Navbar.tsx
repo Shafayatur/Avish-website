@@ -14,7 +14,7 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { user } = useAuth();
-  const { totalItems } = useCart();
+  const { totalItems, setSidebarOpen } = useCart();
   const { totalItems: wishlistCount } = useWishlist();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
@@ -159,14 +159,14 @@ const Navbar = () => {
             )}
           </Link>
 
-          <Link to="/cart" className="relative p-2 hover:text-primary transition-colors duration-300">
+          <button onClick={() => setSidebarOpen(true)} className="relative p-2 hover:text-primary transition-colors duration-300">
             <ShoppingBag size={18} />
             {totalItems > 0 && (
               <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center font-body">
                 {totalItems}
               </span>
             )}
-          </Link>
+          </button>
 
           {user ? (
             <Link to="/profile" className="p-2 hover:text-primary transition-colors duration-300">

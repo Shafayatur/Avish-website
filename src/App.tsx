@@ -8,6 +8,7 @@ import { CartProvider } from "@/hooks/useCart";
 import { WishlistProvider } from "@/hooks/useWishlist";
 import { ThemeProvider } from "@/hooks/useTheme";
 import Index from "./pages/Index";
+import CartSidebar from "./components/CartSidebar";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import AdminLogin from "./pages/AdminLogin";
@@ -42,7 +43,8 @@ const App = () => (
           <AuthProvider>
             <CartProvider>
               <WishlistProvider>
-                <Routes>
+                <CartSidebar />
+                  <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/admin-login" element={<AdminLogin />} />
