@@ -185,8 +185,8 @@ const ProductDetail = () => {
                   ) : (
                     <motion.div
                       key={`img-${selectedImage}`}
-                      initial={{ opacity: 0, scale: 1.05 }}
-                      animate={{ opacity: 1, scale: 1 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.3 }}
                       className={`w-full h-full flex items-center justify-center p-8 cursor-zoom-in ${zoomed ? "cursor-zoom-out" : ""}`}
