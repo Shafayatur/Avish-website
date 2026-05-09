@@ -123,7 +123,7 @@ const ProductDetail = () => {
   };
 
   if (loading) return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden">
       <Navbar />
       <div className="pt-32 container mx-auto px-6 text-center">
         <div className="animate-pulse">
@@ -156,7 +156,7 @@ const ProductDetail = () => {
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             {/* Media Gallery */}
-            <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
               {/* Main display */}
               <div className="relative rounded-3xl overflow-hidden bg-cream aspect-square group">
                 <AnimatePresence mode="wait">
@@ -281,7 +281,7 @@ const ProductDetail = () => {
             </motion.div>
 
             {/* Info */}
-            <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} className="space-y-6 lg:sticky lg:top-28">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="space-y-6 lg:sticky lg:top-28">
               <div>
                 <p className="font-body text-xs tracking-[0.3em] uppercase text-primary mb-3">
                   {product.categories?.name || "Uncategorized"}
