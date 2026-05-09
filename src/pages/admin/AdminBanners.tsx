@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Pencil, Trash2, X, Upload } from "lucide-react";
+import { Plus, Pencil, Trash2, X, Upload, ToggleLeft, ToggleRight, Eye } from "lucide-react";
 import ConfirmModal from "@/components/admin/ConfirmModal";
-
 import usePageTitle from "@/hooks/usePageTitle";
+
 const AdminBanners = () => {
   usePageTitle("Admin — Banners");
   const [banners, setBanners] = useState<any[]>([]);
@@ -15,6 +15,7 @@ const AdminBanners = () => {
   const [isNew, setIsNew] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [deleteModal, setDeleteModal] = useState({ open: false, id: "" });
+  const [preview, setPreview] = useState<any>(null);
   const { toast } = useToast();
 
   const fetchBanners = async () => {
@@ -41,8 +42,15 @@ const AdminBanners = () => {
   };
 
   const handleSave = async () => {
-    if (!editing) return;
-    const payload = { title: editing.title, subtitle: editing.subtitle || null, image_url: editing.image_url || null, link_url: editing.link_url || null, is_active: editing.is_active, sort_order: editing.sort_order || 0 };
+    if (!editing || !editing.title) { toast({ title: "Title is required", variant: "destructive" }); return; }
+    const payload = {
+      title: editing.title,
+      subtitle: editing.subtitle || null,
+      image_url: editing.image_url || null,
+      link_url: editing.link_url || null,
+      is_active: editing.is_active,
+      sort_order: editing.sort_order || 0,
+    };
 
     if (isNew) {
       const { error } = await supabase.from("banners").insert(payload);
@@ -65,15 +73,25 @@ const AdminBanners = () => {
     fetchBanners();
   };
 
+  const toggleActive = async (banner: any) => {
+    await supabase.from("banners").update({ is_active: !banner.is_active }).eq("id", banner.id);
+    toast({ title: `Banner ${!banner.is_active ? "activated" : "deactivated"}` });
+    fetchBanners();
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h3 className="font-display text-xl">Banners ({banners.length})</h3>
-        <Button onClick={() => { setEditing({ title: "", subtitle: "", image_url: "", link_url: "", is_active: true, sort_order: 0 }); setIsNew(true); }} className="rounded-xl gap-2">
+        <div>
+          <h3 className="font-display text-xl">Banners</h3>
+          <p className="font-body text-xs text-muted-foreground mt-1">{banners.filter(b => b.is_active).length} active of {banners.length}</p>
+        </div>
+        <Button onClick={() => { setEditing({ title: "", subtitle: "", image_url: "", link_url: "", is_active: true, sort_order: banners.length }); setIsNew(true); }} className="rounded-xl gap-2">
           <Plus size={16} /> Add Banner
         </Button>
       </div>
 
+      {/* Edit Form */}
       {editing && (
         <div className="glass-card rounded-xl p-6 space-y-4">
           <div className="flex justify-between items-center">
@@ -82,7 +100,7 @@ const AdminBanners = () => {
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <Label className="font-body text-xs tracking-widest uppercase">Title</Label>
+              <Label className="font-body text-xs tracking-widest uppercase">Title *</Label>
               <Input value={editing.title} onChange={e => setEditing({ ...editing, title: e.target.value })} className="mt-1 rounded-xl" />
             </div>
             <div>
@@ -113,35 +131,108 @@ const AdminBanners = () => {
               <Label className="font-body text-sm">Active</Label>
             </div>
           </div>
-          <Button onClick={handleSave} variant="hero" className="rounded-xl">Save Banner</Button>
+
+          {/* Live Preview */}
+          {editing.image_url && (
+            <div>
+              <p className="font-body text-xs tracking-widest uppercase text-muted-foreground mb-2">Live Preview</p>
+              <div className="relative rounded-2xl overflow-hidden h-48">
+                <img src={editing.image_url} alt="" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
+                <div className="absolute inset-0 flex items-center px-8">
+                  <div>
+                    <p className="font-body text-[10px] uppercase text-white/60 tracking-widest mb-2">✦ Special Offer ✦</p>
+                    <h3 className="font-display text-2xl text-white mb-1">{editing.title || "Banner Title"}</h3>
+                    {editing.subtitle && <p className="font-body text-sm text-white/70">{editing.subtitle}</p>}
+                    {editing.link_url && (
+                      <div className="mt-3 inline-block px-4 py-1.5 rounded-full border border-white/40 font-body text-xs text-white">
+                        Shop Now →
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="flex gap-3">
+            <Button variant="outline" className="rounded-xl" onClick={() => { setEditing(null); setIsNew(false); }}>Cancel</Button>
+            <Button onClick={handleSave} variant="hero" className="rounded-xl">Save Banner</Button>
+          </div>
         </div>
       )}
 
-      <div className="space-y-3">
-        {banners.map(banner => (
-          <div key={banner.id} className="glass-card rounded-xl overflow-hidden">
-            <div className="flex items-center gap-4 p-4">
-              {banner.image_url && (
-                <img src={banner.image_url} alt="" className="w-24 h-16 object-cover rounded-lg flex-shrink-0" />
-              )}
-              <div className="flex-1">
-                <h4 className="font-display text-lg">{banner.title}</h4>
-                <p className="font-body text-xs text-muted-foreground">{banner.subtitle || "No subtitle"}</p>
-                <span className={`inline-block mt-1 px-2 py-0.5 rounded-full font-body text-xs ${banner.is_active ? "bg-primary/10 text-primary" : "bg-destructive/10 text-destructive"}`}>
-                  {banner.is_active ? "Active" : "Inactive"}
-                </span>
+      {/* Banner Preview Modal */}
+      {preview && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/50 backdrop-blur-sm p-6" onClick={() => setPreview(null)}>
+          <div className="w-full max-w-3xl">
+            <div className="relative rounded-2xl overflow-hidden h-64 md:h-80">
+              <img src={preview.image_url} alt="" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
+              <div className="absolute inset-0 flex items-center px-10">
+                <div>
+                  <p className="font-body text-xs uppercase text-white/60 tracking-widest mb-3">✦ Special Offer ✦</p>
+                  <h3 className="font-display text-4xl text-white mb-2">{preview.title}</h3>
+                  {preview.subtitle && <p className="font-body text-base text-white/70">{preview.subtitle}</p>}
+                </div>
               </div>
-              <div className="flex gap-2">
-                <button onClick={() => { setEditing(banner); setIsNew(false); }} className="p-2 hover:text-primary transition-colors"><Pencil size={16} /></button>
-                <button onClick={() => setDeleteModal({ open: true, id: banner.id })} className="p-2 hover:text-destructive transition-colors"><Trash2 size={16} /></button>
+              <button onClick={() => setPreview(null)} className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/50 flex items-center justify-center text-white">
+                <X size={16} />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Banners List */}
+      <div className="space-y-3">
+        {banners.length === 0 ? (
+          <p className="font-body text-muted-foreground text-center py-8">No banners yet.</p>
+        ) : banners.map(banner => (
+          <div key={banner.id} className={`glass-card rounded-xl overflow-hidden ${!banner.is_active ? "opacity-60" : ""}`}>
+            <div className="flex items-center gap-4 p-4">
+              {banner.image_url ? (
+                <img src={banner.image_url} alt="" className="w-24 h-16 object-cover rounded-lg flex-shrink-0" />
+              ) : (
+                <div className="w-24 h-16 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
+                  <span className="font-body text-xs text-muted-foreground">No image</span>
+                </div>
+              )}
+              <div className="flex-1 min-w-0">
+                <h4 className="font-display text-lg line-clamp-1">{banner.title}</h4>
+                <p className="font-body text-xs text-muted-foreground line-clamp-1">{banner.subtitle || "No subtitle"}</p>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className={`px-2 py-0.5 rounded-full font-body text-[10px] ${banner.is_active ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"}`}>
+                    {banner.is_active ? "Active" : "Inactive"}
+                  </span>
+                  <span className="font-body text-[10px] text-muted-foreground">Order: {banner.sort_order}</span>
+                  {banner.link_url && <span className="font-body text-[10px] text-muted-foreground">→ {banner.link_url}</span>}
+                </div>
+              </div>
+              <div className="flex gap-1 flex-shrink-0">
+                {banner.image_url && (
+                  <button onClick={() => setPreview(banner)} className="p-2 hover:text-primary transition-colors" title="Preview">
+                    <Eye size={15} />
+                  </button>
+                )}
+                <button onClick={() => toggleActive(banner)} className="p-2 transition-colors" title={banner.is_active ? "Deactivate" : "Activate"}>
+                  {banner.is_active
+                    ? <ToggleRight size={18} className="text-primary" />
+                    : <ToggleLeft size={18} className="text-muted-foreground" />
+                  }
+                </button>
+                <button onClick={() => { setEditing(banner); setIsNew(false); }} className="p-2 hover:text-primary transition-colors">
+                  <Pencil size={15} />
+                </button>
+                <button onClick={() => setDeleteModal({ open: true, id: banner.id })} className="p-2 hover:text-destructive transition-colors">
+                  <Trash2 size={15} />
+                </button>
               </div>
             </div>
           </div>
         ))}
-        {banners.length === 0 && (
-          <p className="font-body text-muted-foreground text-center py-8">No banners yet. Add your first banner to appear on the homepage.</p>
-        )}
       </div>
+
       <ConfirmModal
         open={deleteModal.open}
         title="Delete Banner?"
