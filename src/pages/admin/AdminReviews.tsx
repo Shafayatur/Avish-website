@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Star, Check, X, Trash2 } from "lucide-react";
+import ConfirmModal from "@/components/admin/ConfirmModal";
 import { Button } from "@/components/ui/button";
 
 interface Review {
@@ -20,6 +21,7 @@ const AdminReviews = () => {
   usePageTitle("Admin — Reviews");
   const [reviews, setReviews] = useState<Review[]>([]);
   const [filter, setFilter] = useState<"all" | "pending" | "approved">("all");
+  const [deleteModal, setDeleteModal] = useState({ open: false, id: "" });
   const { toast } = useToast();
 
   const fetchReviews = async () => {
@@ -42,10 +44,10 @@ const AdminReviews = () => {
     }
   };
 
-  const deleteReview = async (id: string) => {
-    if (!confirm("Delete this review permanently?")) return;
-    await supabase.from("reviews").delete().eq("id", id);
+  const deleteReview = async () => {
+    await supabase.from("reviews").delete().eq("id", deleteModal.id);
     toast({ title: "Review deleted" });
+    setDeleteModal({ open: false, id: "" });
     fetchReviews();
   };
 
@@ -108,7 +110,7 @@ const AdminReviews = () => {
                     <X size={16} />
                   </button>
                 )}
-                <button onClick={() => deleteReview(review.id)} className="p-2 hover:text-destructive transition-colors" title="Delete">
+                <button onClick={() => setDeleteModal({ open: true, id: review.id })} className="p-2 hover:text-destructive transition-colors" title="Delete">
                   <Trash2 size={16} />
                 </button>
               </div>
@@ -119,6 +121,13 @@ const AdminReviews = () => {
           <p className="font-body text-muted-foreground text-center py-8">No reviews found</p>
         )}
       </div>
+      <ConfirmModal
+        open={deleteModal.open}
+        title="Delete Review?"
+        message="This review will be permanently deleted."
+        onConfirm={deleteReview}
+        onCancel={() => setDeleteModal({ open: false, id: "" })}
+      />
     </div>
   );
 };

@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, Pencil, Trash2, X, Upload } from "lucide-react";
+import ConfirmModal from "@/components/admin/ConfirmModal";
 
 import usePageTitle from "@/hooks/usePageTitle";
 const AdminBanners = () => {
@@ -13,6 +14,7 @@ const AdminBanners = () => {
   const [editing, setEditing] = useState<any>(null);
   const [isNew, setIsNew] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [deleteModal, setDeleteModal] = useState({ open: false, id: "" });
   const { toast } = useToast();
 
   const fetchBanners = async () => {
@@ -56,10 +58,10 @@ const AdminBanners = () => {
     fetchBanners();
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Delete this banner?")) return;
-    await supabase.from("banners").delete().eq("id", id);
+  const handleDelete = async () => {
+    await supabase.from("banners").delete().eq("id", deleteModal.id);
     toast({ title: "Banner deleted" });
+    setDeleteModal({ open: false, id: "" });
     fetchBanners();
   };
 
@@ -131,7 +133,7 @@ const AdminBanners = () => {
               </div>
               <div className="flex gap-2">
                 <button onClick={() => { setEditing(banner); setIsNew(false); }} className="p-2 hover:text-primary transition-colors"><Pencil size={16} /></button>
-                <button onClick={() => handleDelete(banner.id)} className="p-2 hover:text-destructive transition-colors"><Trash2 size={16} /></button>
+                <button onClick={() => setDeleteModal({ open: true, id: banner.id })} className="p-2 hover:text-destructive transition-colors"><Trash2 size={16} /></button>
               </div>
             </div>
           </div>
@@ -140,6 +142,13 @@ const AdminBanners = () => {
           <p className="font-body text-muted-foreground text-center py-8">No banners yet. Add your first banner to appear on the homepage.</p>
         )}
       </div>
+      <ConfirmModal
+        open={deleteModal.open}
+        title="Delete Banner?"
+        message="This banner will be permanently deleted."
+        onConfirm={handleDelete}
+        onCancel={() => setDeleteModal({ open: false, id: "" })}
+      />
     </div>
   );
 };

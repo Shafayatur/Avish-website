@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, Pencil, Trash2, X, Upload } from "lucide-react";
+import ConfirmModal from "@/components/admin/ConfirmModal";
 
 import usePageTitle from "@/hooks/usePageTitle";
 const AdminCategories = () => {
@@ -13,6 +14,7 @@ const AdminCategories = () => {
   const [editing, setEditing] = useState<any>(null);
   const [isNew, setIsNew] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [deleteModal, setDeleteModal] = useState({ open: false, id: "" });
   const { toast } = useToast();
 
   const fetchCategories = async () => {
@@ -59,10 +61,10 @@ const AdminCategories = () => {
     fetchCategories();
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Delete this category?")) return;
-    await supabase.from("categories").delete().eq("id", id);
+  const handleDelete = async () => {
+    await supabase.from("categories").delete().eq("id", deleteModal.id);
     toast({ title: "Category deleted" });
+    setDeleteModal({ open: false, id: "" });
     fetchCategories();
   };
 
@@ -126,12 +128,19 @@ const AdminCategories = () => {
               </div>
               <div className="flex gap-2">
                 <button onClick={() => { setEditing(cat); setIsNew(false); }} className="p-2 hover:text-primary transition-colors"><Pencil size={16} /></button>
-                <button onClick={() => handleDelete(cat.id)} className="p-2 hover:text-destructive transition-colors"><Trash2 size={16} /></button>
+                <button onClick={() => setDeleteModal({ open: true, id: cat.id })} className="p-2 hover:text-destructive transition-colors"><Trash2 size={16} /></button>
               </div>
             </div>
           </div>
         ))}
       </div>
+      <ConfirmModal
+        open={deleteModal.open}
+        title="Delete Category?"
+        message="This category will be permanently deleted."
+        onConfirm={handleDelete}
+        onCancel={() => setDeleteModal({ open: false, id: "" })}
+      />
     </div>
   );
 };
