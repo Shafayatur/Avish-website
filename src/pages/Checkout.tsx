@@ -22,6 +22,7 @@ const Checkout = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<"cod" | "bank" | "bkash" | "nagad">("cod");
   const [insideDhaka, setInsideDhaka] = useState(true);
   const [orderPlaced, setOrderPlaced] = useState<string | null>(null);
   const [showCreateAccount, setShowCreateAccount] = useState(false);
@@ -80,7 +81,7 @@ const Checkout = () => {
       shipping_zip: form.shipping_zip || null,
       shipping_phone: form.shipping_phone,
       shipping_country: "BD",
-      payment_method: "cod",
+      payment_method: paymentMethod,
       notes: form.notes || null,
       status: "pending",
     });
@@ -328,13 +329,85 @@ const Checkout = () => {
 
                 <div className="glass-card rounded-2xl p-6">
                   <h3 className="font-display text-xl mb-4">Payment Method</h3>
-                  <div className="flex items-center gap-3 p-4 border-2 border-primary rounded-xl bg-primary/5">
-                    <div className="w-4 h-4 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0">
-                      <div className="w-2 h-2 rounded-full bg-primary" />
+                  <div className="space-y-3">
+                    {/* COD */}
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod("cod")}
+                      className={`w-full flex items-center gap-3 p-4 rounded-xl border-2 text-left transition-all ${paymentMethod === "cod" ? "border-primary bg-primary/5" : "border-border"}`}
+                    >
+                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${paymentMethod === "cod" ? "border-primary" : "border-muted-foreground"}`}>
+                        {paymentMethod === "cod" && <div className="w-2 h-2 rounded-full bg-primary" />}
+                      </div>
+                      <div>
+                        <p className="font-body text-sm font-medium">Cash on Delivery</p>
+                        <p className="font-body text-xs text-muted-foreground">Pay when your order arrives</p>
+                      </div>
+                    </button>
+
+                    {/* Bank Transfer */}
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod("bank")}
+                      className={`w-full flex items-center gap-3 p-4 rounded-xl border-2 text-left transition-all ${paymentMethod === "bank" ? "border-primary bg-primary/5" : "border-border"}`}
+                    >
+                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${paymentMethod === "bank" ? "border-primary" : "border-muted-foreground"}`}>
+                        {paymentMethod === "bank" && <div className="w-2 h-2 rounded-full bg-primary" />}
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-body text-sm font-medium">Bank Transfer</p>
+                        <p className="font-body text-xs text-muted-foreground">Transfer to our bank account</p>
+                      </div>
+                    </button>
+
+                    {/* Bank details */}
+                    {paymentMethod === "bank" && (
+                      <div className="ml-4 p-4 bg-muted/50 rounded-xl space-y-2">
+                        <p className="font-body text-xs font-semibold text-foreground mb-3">Transfer to this account:</p>
+                        <div className="grid grid-cols-2 gap-2 font-body text-xs">
+                          <span className="text-muted-foreground">Bank</span>
+                          <span className="font-medium">YOUR_BANK_NAME</span>
+                          <span className="text-muted-foreground">Account Name</span>
+                          <span className="font-medium">YOUR_ACCOUNT_NAME</span>
+                          <span className="text-muted-foreground">Account No.</span>
+                          <span className="font-medium font-mono">YOUR_ACCOUNT_NUMBER</span>
+                          <span className="text-muted-foreground">Branch</span>
+                          <span className="font-medium">YOUR_BRANCH_NAME</span>
+                          <span className="text-muted-foreground">Routing No.</span>
+                          <span className="font-medium font-mono">YOUR_ROUTING_NUMBER</span>
+                        </div>
+                        <p className="font-body text-xs text-primary mt-2">After transfer, enter your transaction ID below</p>
+                        <input
+                          type="text"
+                          placeholder="Transaction ID / Reference"
+                          className="w-full mt-1 px-3 py-2 rounded-xl border border-input bg-background font-body text-sm"
+                          onChange={e => {}}
+                        />
+                      </div>
+                    )}
+
+                    {/* bKash - Coming Soon */}
+                    <div className="w-full flex items-center gap-3 p-4 rounded-xl border-2 border-border text-left opacity-50 cursor-not-allowed relative">
+                      <div className="w-4 h-4 rounded-full border-2 border-muted-foreground flex-shrink-0" />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <p className="font-body text-sm font-medium">bKash</p>
+                          <span className="px-2 py-0.5 rounded-full bg-muted font-body text-[10px] text-muted-foreground">Coming Soon</span>
+                        </div>
+                        <p className="font-body text-xs text-muted-foreground">Mobile payment via bKash</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-body text-sm font-medium">Cash on Delivery</p>
-                      <p className="font-body text-xs text-muted-foreground">Pay when your order arrives at your door</p>
+
+                    {/* Nagad - Coming Soon */}
+                    <div className="w-full flex items-center gap-3 p-4 rounded-xl border-2 border-border text-left opacity-50 cursor-not-allowed relative">
+                      <div className="w-4 h-4 rounded-full border-2 border-muted-foreground flex-shrink-0" />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <p className="font-body text-sm font-medium">Nagad</p>
+                          <span className="px-2 py-0.5 rounded-full bg-muted font-body text-[10px] text-muted-foreground">Coming Soon</span>
+                        </div>
+                        <p className="font-body text-xs text-muted-foreground">Mobile payment via Nagad</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -379,7 +452,7 @@ const Checkout = () => {
                     {loading ? "Placing Order..." : "Place Order"}
                   </Button>
                   <p className="font-body text-xs text-muted-foreground text-center mt-3">
-                    💰 Pay on delivery — no payment needed now
+                    {paymentMethod === "cod" ? "💰 Pay on delivery — no payment needed now" : "🏦 Please complete your bank transfer before delivery"}
                   </p>
                   <div className="mt-4 p-3 bg-muted/50 rounded-xl">
                     <p className="font-body text-xs font-medium text-foreground mb-1">⚠️ Return Policy</p>
