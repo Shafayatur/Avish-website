@@ -81,8 +81,13 @@ const ProductDetail = () => {
       }
     };
     fetchProduct();
-    window.scrollTo(0, 0);
   }, [slug]);
+
+  useEffect(() => {
+    if (!loading) {
+      window.scrollTo(0, 0);
+    }
+  }, [loading, slug]);
 
   const handleSubmitReview = async () => {
     if (!user) { toast({ title: "Please sign in to leave a review", variant: "destructive" }); return; }
