@@ -39,7 +39,7 @@ const Cart = () => {
   }, [items]);
 
   return (
-    <div className="min-h-screen overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden w-full">
       <Navbar />
       <div className="pt-28 pb-20">
         <div className="container mx-auto px-6">
@@ -58,7 +58,7 @@ const Cart = () => {
           ) : (
             <div className="grid lg:grid-cols-3 gap-10">
               {/* Cart Items */}
-              <div className="lg:col-span-2 space-y-4">
+              <div className="lg:col-span-2 space-y-4 min-w-0">
                 {items.map((item, i) => (
                   <motion.div
                     key={item.id}
