@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -37,6 +37,22 @@ const Checkout = () => {
   });
 
   const total = totalPrice;
+
+  // Autofill from profile if logged in
+  useEffect(() => {
+    if (!user) return;
+    supabase.from("profiles").select("*").eq("id", user.id).single().then(({ data }) => {
+      if (data) {
+        setForm(prev => ({
+          ...prev,
+          shipping_name: data.full_name || prev.shipping_name,
+          shipping_phone: data.phone || prev.shipping_phone,
+          shipping_address: data.address || prev.shipping_address,
+          shipping_city: data.city || prev.shipping_city,
+        }));
+      }
+    });
+  }, [user]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

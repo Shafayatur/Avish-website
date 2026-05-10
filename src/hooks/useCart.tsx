@@ -122,7 +122,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       } else {
         await supabase.from("cart_items").insert({ user_id: user.id, product_id: productId, quantity });
       }
-      toast({ title: "Added to cart!" });
       setSidebarOpen(true);
       await fetchDbCart();
     } else {
@@ -130,7 +129,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       const existing = guest.find(g => g.product_id === productId);
       if (existing) { existing.quantity += quantity; } else { guest.push({ product_id: productId, quantity }); }
       setGuestCart(guest);
-      toast({ title: "Added to cart!" });
       setSidebarOpen(true);
       await fetchGuestCartWithProducts();
     }

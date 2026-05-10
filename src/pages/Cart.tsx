@@ -78,14 +78,15 @@ const Cart = () => {
                     </div>
                   </div>
                   <p className="font-body text-xs text-muted-foreground mb-4">💰 Payment: Cash on Delivery</p>
-                  {user ? (
-                    <Button asChild variant="hero" className="w-full rounded-xl">
-                      <Link to="/checkout">Proceed to Checkout</Link>
-                    </Button>
-                  ) : (
-                    <Button asChild variant="hero" className="w-full rounded-xl">
-                      <Link to="/auth">Sign In to Checkout</Link>
-                    </Button>
+                  <Button asChild variant="hero" className="w-full rounded-xl">
+                    <Link to="/checkout">Proceed to Checkout</Link>
+                  </Button>
+                  {!user && (
+                    <p className="font-body text-xs text-muted-foreground text-center mt-2">
+                      No account needed —{" "}
+                      <Link to="/auth" className="text-primary hover:underline">sign in</Link>{" "}
+                      to autofill your details
+                    </p>
                   )}
                 </div>
               </div>
