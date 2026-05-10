@@ -105,7 +105,7 @@ const AdminCustomers = () => {
           <p className="font-body text-xs text-muted-foreground tracking-widest uppercase mt-1">Ordered</p>
         </div>
         <div className="glass-card rounded-xl p-4 text-center">
-          <p className="font-display text-2xl text-primary">৳{customers.reduce((s, c) => s + c.totalSpend, 0).toFixed(0)}</p>
+          <p className="font-display text-2xl text-primary">Tk {customers.reduce((s, c) => s + c.totalSpend, 0).toFixed(0)}</p>
           <p className="font-body text-xs text-muted-foreground tracking-widest uppercase mt-1">Revenue</p>
         </div>
       </div>
@@ -195,7 +195,7 @@ const AdminCustomers = () => {
 
                   {/* Spend */}
                   <span className={`font-display text-sm ${c.totalSpend > 0 ? "text-primary" : "text-muted-foreground"}`}>
-                    {c.totalSpend > 0 ? `৳${c.totalSpend.toFixed(0)}` : "—"}
+                    {c.totalSpend > 0 ? `Tk ${c.totalSpend.toFixed(0)}` : "—"}
                   </span>
 
                   {/* Expand icon */}
@@ -222,7 +222,7 @@ const AdminCustomers = () => {
                         <span className={`px-2 py-0.5 rounded-full font-body text-[10px] capitalize ${statusColors[order.status] || "bg-muted"}`}>
                           {order.status}
                         </span>
-                        <span className="font-display text-sm text-primary">৳{Number(order.total).toFixed(0)}</span>
+                        <span className="font-display text-sm text-primary">Tk {Number(order.total).toFixed(0)}</span>
                       </div>
                     ))}
                   </div>

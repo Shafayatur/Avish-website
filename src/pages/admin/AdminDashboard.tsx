@@ -34,7 +34,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
     return (
       <div className="glass-card rounded-xl px-4 py-3 text-sm">
         <p className="font-body text-xs text-muted-foreground mb-1">{label}</p>
-        <p className="font-display text-lg text-primary">৳{Number(payload[0].value).toFixed(0)}</p>
+        <p className="font-display text-lg text-primary">Tk {Number(payload[0].value).toFixed(0)}</p>
       </div>
     );
   }
@@ -135,8 +135,8 @@ const AdminDashboard = () => {
         <StatCard
           icon={TrendingUp}
           label="Total Revenue"
-          value={`৳${stats.revenue.toFixed(0)}`}
-          sub={`৳${stats.thisMonthRevenue.toFixed(0)} this month`}
+          value={`Tk ${stats.revenue.toFixed(0)}`}
+          sub={`Tk ${stats.thisMonthRevenue.toFixed(0)} this month`}
           trend={revenueTrend || undefined}
           trendUp={stats.thisMonthRevenue >= stats.lastMonthRevenue}
         />
@@ -168,7 +168,7 @@ const AdminDashboard = () => {
             <p className="font-body text-xs text-muted-foreground mt-1">Last 6 months</p>
           </div>
           <div className="text-right">
-            <p className="font-display text-2xl text-primary">৳{stats.thisMonthRevenue.toFixed(0)}</p>
+            <p className="font-display text-2xl text-primary">Tk {stats.thisMonthRevenue.toFixed(0)}</p>
             <p className="font-body text-xs text-muted-foreground">This month</p>
           </div>
         </div>
@@ -182,7 +182,7 @@ const AdminDashboard = () => {
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
             <XAxis dataKey="month" tick={{ fontFamily: "Montserrat", fontSize: 11 }} tickLine={false} axisLine={false} />
-            <YAxis tick={{ fontFamily: "Montserrat", fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={v => `৳${v}`} />
+            <YAxis tick={{ fontFamily: "Montserrat", fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={v => `Tk ${v}`} />
             <Tooltip content={<CustomTooltip />} />
             <Area type="monotone" dataKey="revenue" stroke="hsl(14 45% 65%)" strokeWidth={2} fill="url(#revenueGrad)" />
           </AreaChart>
@@ -209,7 +209,7 @@ const AdminDashboard = () => {
                   <tr key={order.id} className="border-b border-border/50 hover:bg-muted/20 transition-colors">
                     <td className="py-3 pr-4 font-body text-sm text-muted-foreground">#{order.id.slice(0, 8)}</td>
                     <td className="py-3 pr-4 font-body text-sm">{order.shipping_name || "—"}</td>
-                    <td className="py-3 pr-4 font-display text-sm text-primary">৳{Number(order.total).toFixed(0)}</td>
+                    <td className="py-3 pr-4 font-display text-sm text-primary">Tk {Number(order.total).toFixed(0)}</td>
                     <td className="py-3 pr-4">
                       <span className={`px-2 py-1 rounded-full font-body text-xs capitalize ${statusColors[order.status] || "bg-muted"}`}>
                         {order.status}

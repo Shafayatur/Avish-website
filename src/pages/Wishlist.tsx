@@ -55,7 +55,7 @@ const Wishlist = () => {
                       </div>
                     </Link>
                     <h3 className="font-display text-xl mb-2">{item.product.name}</h3>
-                    <p className="font-display text-2xl text-primary mb-4">৳{Number(item.product.price).toFixed(2)}</p>
+                    <p className="font-display text-2xl text-primary mb-4">Tk {Number(item.product.price).toFixed(2)}</p>
                     <div className="flex gap-2">
                       <Button variant="hero" size="sm" className="rounded-full flex-1 gap-2" onClick={() => addToCart(item.product.id)} disabled={item.product.stock < 1}>
                         <ShoppingBag size={14} />

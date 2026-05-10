@@ -86,9 +86,9 @@ const ProductCard = ({ product, index }: { product: any; index: number }) => {
             </p>
             <h3 className="font-display text-sm md:text-base mb-1.5 line-clamp-1 text-foreground">{product.name}</h3>
             <div className="flex items-baseline gap-2 mb-3">
-              <span className="font-display text-base md:text-lg text-primary">৳{Number(product.price).toFixed(0)}</span>
+              <span className="font-display text-base md:text-lg text-primary">Tk {Number(product.price).toFixed(0)}</span>
               {product.compare_at_price && (
-                <span className="font-body text-xs text-muted-foreground line-through">৳{Number(product.compare_at_price).toFixed(0)}</span>
+                <span className="font-body text-xs text-muted-foreground line-through">Tk {Number(product.compare_at_price).toFixed(0)}</span>
               )}
             </div>
             <button

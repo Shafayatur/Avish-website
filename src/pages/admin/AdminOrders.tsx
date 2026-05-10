@@ -75,7 +75,7 @@ const AdminOrders = () => {
       {/* Summary Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: "Total Revenue", value: "৳" + totalRevenue.toFixed(0), icon: TrendingUp, color: "text-primary" },
+          { label: "Total Revenue", value: "Tk " + totalRevenue.toFixed(0), icon: TrendingUp, color: "text-primary" },
           { label: "Today's Orders", value: String(todayOrders), icon: Package, color: "text-blue-600" },
           { label: "Pending", value: String(pendingCount), icon: Clock, color: "text-yellow-600" },
           { label: "Delivered", value: String(deliveredCount), icon: CheckCircle, color: "text-green-600" },
@@ -160,7 +160,7 @@ const AdminOrders = () => {
 
                 {/* Total */}
                 <div className="text-right">
-                  <p className="font-display text-lg text-primary">৳{Number(order.total).toFixed(0)}</p>
+                  <p className="font-display text-lg text-primary">Tk {Number(order.total).toFixed(0)}</p>
                   <p className="font-body text-xs text-muted-foreground">{new Date(order.created_at).toLocaleDateString()}</p>
                 </div>
 
@@ -213,7 +213,7 @@ const AdminOrders = () => {
                           </div>
                           <span className="font-body text-sm flex-1 line-clamp-1">{item.product_name}</span>
                           <span className="font-body text-xs text-muted-foreground">×{item.quantity}</span>
-                          <span className="font-display text-sm text-primary">৳{(item.quantity * Number(item.price)).toFixed(0)}</span>
+                          <span className="font-display text-sm text-primary">Tk {(item.quantity * Number(item.price)).toFixed(0)}</span>
                         </div>
                       ))}
                     </div>
@@ -222,7 +222,7 @@ const AdminOrders = () => {
                     <div className="flex justify-end mt-3 pt-3 border-t border-border">
                       <div className="text-right">
                         <p className="font-body text-xs text-muted-foreground">Order Total</p>
-                        <p className="font-display text-xl text-primary">৳{Number(order.total).toFixed(0)}</p>
+                        <p className="font-display text-xl text-primary">Tk {Number(order.total).toFixed(0)}</p>
                       </div>
                     </div>
                   </div>

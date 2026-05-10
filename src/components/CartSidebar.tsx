@@ -94,7 +94,7 @@ const CartSidebar = () => {
                     <div className="flex-1 min-w-0">
                       <p className="font-body text-sm font-medium line-clamp-1">{item.product?.name}</p>
                       <p className="font-display text-sm text-primary mt-0.5">
-                        ৳{Number(item.product?.price || 0).toFixed(0)}
+                        Tk {Number(item.product?.price || 0).toFixed(0)}
                       </p>
                       <div className="flex items-center gap-2 mt-1.5">
                         <div className="flex items-center border border-border rounded-full">
@@ -107,7 +107,7 @@ const CartSidebar = () => {
                           </button>
                         </div>
                         <span className="font-body text-xs text-muted-foreground">
-                          ৳{(item.quantity * Number(item.product?.price || 0)).toFixed(0)}
+                          Tk {(item.quantity * Number(item.product?.price || 0)).toFixed(0)}
                         </span>
                       </div>
                     </div>
@@ -132,7 +132,7 @@ const CartSidebar = () => {
                 {/* Total */}
                 <div className="flex justify-between font-display text-lg">
                   <span>Subtotal</span>
-                  <span className="text-primary">৳{totalPrice.toFixed(0)}</span>
+                  <span className="text-primary">Tk {totalPrice.toFixed(0)}</span>
                 </div>
 
                 {/* Buttons */}

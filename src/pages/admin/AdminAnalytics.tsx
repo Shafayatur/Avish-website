@@ -12,7 +12,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       <div className="glass-card rounded-xl px-4 py-3 text-sm">
         <p className="font-body text-xs text-muted-foreground mb-1">{label || payload[0].name}</p>
         <p className="font-display text-lg text-primary">
-          {payload[0].name === "revenue" || label ? `৳${Number(payload[0].value).toFixed(0)}` : payload[0].value}
+          {payload[0].name === "revenue" || label ? `Tk ${Number(payload[0].value).toFixed(0)}` : payload[0].value}
         </p>
       </div>
     );
@@ -117,7 +117,7 @@ const AdminAnalytics = () => {
       <div className="grid sm:grid-cols-3 gap-4">
         <div className="glass-card rounded-xl p-5">
           <p className="font-body text-xs tracking-widest uppercase text-muted-foreground">Avg Order Value</p>
-          <p className="font-display text-3xl text-primary mt-2">৳{avgOrderValue.toFixed(0)}</p>
+          <p className="font-display text-3xl text-primary mt-2">Tk {avgOrderValue.toFixed(0)}</p>
         </div>
         <div className="glass-card rounded-xl p-5">
           <p className="font-body text-xs tracking-widest uppercase text-muted-foreground">Top Category</p>
@@ -142,7 +142,7 @@ const AdminAnalytics = () => {
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={topProducts} layout="vertical" margin={{ left: 0, right: 20 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" horizontal={false} />
-                <XAxis type="number" tick={{ fontFamily: "Montserrat", fontSize: 10 }} tickFormatter={v => `৳${v}`} tickLine={false} axisLine={false} />
+                <XAxis type="number" tick={{ fontFamily: "Montserrat", fontSize: 10 }} tickFormatter={v => `Tk ${v}`} tickLine={false} axisLine={false} />
                 <YAxis type="category" dataKey="name" tick={{ fontFamily: "Montserrat", fontSize: 10 }} tickLine={false} axisLine={false} width={80} />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar dataKey="revenue" fill="hsl(14,45%,65%)" radius={[0, 6, 6, 0]} />
@@ -192,7 +192,7 @@ const AdminAnalytics = () => {
             <BarChart data={categoryRevenue} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis dataKey="name" tick={{ fontFamily: "Montserrat", fontSize: 11 }} tickLine={false} axisLine={false} />
-              <YAxis tick={{ fontFamily: "Montserrat", fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={v => `৳${v}`} />
+              <YAxis tick={{ fontFamily: "Montserrat", fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={v => `Tk ${v}`} />
               <Tooltip content={<CustomTooltip />} />
               <Bar dataKey="revenue" fill="hsl(350,35%,75%)" radius={[6, 6, 0, 0]} />
             </BarChart>
@@ -244,7 +244,7 @@ const AdminAnalytics = () => {
                     <p className="font-body text-sm line-clamp-1">{c.name}</p>
                     <p className="font-body text-xs text-muted-foreground">{c.orders} order{c.orders !== 1 ? "s" : ""}</p>
                   </div>
-                  <p className="font-display text-sm text-primary flex-shrink-0">৳{c.spend.toFixed(0)}</p>
+                  <p className="font-display text-sm text-primary flex-shrink-0">Tk {c.spend.toFixed(0)}</p>
                 </div>
               ))}
             </div>

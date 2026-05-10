@@ -330,7 +330,7 @@ const Checkout = () => {
                         <div className={`w-3 h-3 rounded-full border-2 ${insideDhaka ? "border-primary bg-primary" : "border-muted-foreground"}`} />
                         <p className="font-body text-sm font-medium">Inside Dhaka</p>
                       </div>
-                      <p className="font-display text-lg text-primary">৳80</p>
+                      <p className="font-display text-lg text-primary">Tk 80</p>
                       <p className="font-body text-xs text-muted-foreground">1-2 days</p>
                     </button>
                     <button
@@ -342,7 +342,7 @@ const Checkout = () => {
                         <div className={`w-3 h-3 rounded-full border-2 ${!insideDhaka ? "border-primary bg-primary" : "border-muted-foreground"}`} />
                         <p className="font-body text-sm font-medium">Outside Dhaka</p>
                       </div>
-                      <p className="font-display text-lg text-primary">৳150</p>
+                      <p className="font-display text-lg text-primary">Tk 150</p>
                       <p className="font-body text-xs text-muted-foreground">2-4 days</p>
                     </button>
                   </div>
@@ -436,22 +436,22 @@ const Checkout = () => {
                           <p className="font-body text-xs line-clamp-1">{item.product?.name}</p>
                           <p className="font-body text-xs text-muted-foreground">×{item.quantity}</p>
                         </div>
-                        <span className="font-body text-sm flex-shrink-0">৳{(item.quantity * Number(item.product?.price || 0)).toFixed(0)}</span>
+                        <span className="font-body text-sm flex-shrink-0">Tk {(item.quantity * Number(item.product?.price || 0)).toFixed(0)}</span>
                       </div>
                     ))}
                   </div>
                   <div className="border-t border-border pt-4 space-y-2 mb-6">
                     <div className="flex justify-between font-body text-sm">
                       <span className="text-muted-foreground">Subtotal ({items.length} items)</span>
-                      <span>৳{totalPrice.toFixed(0)}</span>
+                      <span>Tk {totalPrice.toFixed(0)}</span>
                     </div>
                     <div className="flex justify-between font-body text-sm">
                       <span className="text-muted-foreground">Delivery ({insideDhaka ? "Inside Dhaka" : "Outside Dhaka"})</span>
-                      <span>৳{deliveryCharge}</span>
+                      <span>Tk {deliveryCharge}</span>
                     </div>
                     <div className="flex justify-between font-display text-xl pt-2 border-t border-border">
                       <span>Total</span>
-                      <span className="text-primary">৳{total.toFixed(0)}</span>
+                      <span className="text-primary">Tk {total.toFixed(0)}</span>
                     </div>
                   </div>
                   <Button type="submit" variant="hero" className="w-full rounded-xl" disabled={loading}>

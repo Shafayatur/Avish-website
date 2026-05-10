@@ -83,10 +83,10 @@ const QuickViewModal = ({ product, onClose }: QuickViewProps) => {
               <h3 className="font-display text-3xl font-light">{product.name}</h3>
 
               <div className="flex items-center gap-3">
-                <span className="font-display text-3xl text-primary">৳{Number(product.price).toFixed(2)}</span>
+                <span className="font-display text-3xl text-primary">Tk {Number(product.price).toFixed(2)}</span>
                 {product.compare_at_price && (
                   <span className="font-body text-lg text-muted-foreground line-through">
-                    ৳{Number(product.compare_at_price).toFixed(2)}
+                    Tk {Number(product.compare_at_price).toFixed(2)}
                   </span>
                 )}
               </div>

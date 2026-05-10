@@ -288,9 +288,9 @@ const AdminProducts = () => {
                   <p className="font-body text-xs text-muted-foreground">{product.slug}</p>
                 </td>
                 <td className="py-3 px-4">
-                  <p className="font-display text-sm text-primary">৳{Number(product.price).toFixed(0)}</p>
+                  <p className="font-display text-sm text-primary">Tk {Number(product.price).toFixed(0)}</p>
                   {product.compare_at_price && (
-                    <p className="font-body text-xs text-muted-foreground line-through">৳{Number(product.compare_at_price).toFixed(0)}</p>
+                    <p className="font-body text-xs text-muted-foreground line-through">Tk {Number(product.compare_at_price).toFixed(0)}</p>
                   )}
                 </td>
                 <td className="py-3 px-4">{stockBadge(product.stock)}</td>
@@ -415,11 +415,11 @@ const AdminProducts = () => {
                   <div className="glass-card rounded-xl p-4 space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <Label className="font-body text-xs tracking-widest uppercase">Price (৳) *</Label>
+                        <Label className="font-body text-xs tracking-widest uppercase">Price (Tk ) *</Label>
                         <Input type="number" step="0.01" value={editing.price} onChange={e => setEditing({ ...editing, price: Number(e.target.value) })} className="mt-1 rounded-xl" />
                       </div>
                       <div>
-                        <Label className="font-body text-xs tracking-widest uppercase">Compare at (৳)</Label>
+                        <Label className="font-body text-xs tracking-widest uppercase">Compare at (Tk )</Label>
                         <Input type="number" step="0.01" value={editing.compare_at_price || ""} onChange={e => setEditing({ ...editing, compare_at_price: e.target.value ? Number(e.target.value) : null })} className="mt-1 rounded-xl" placeholder="Original price" />
                       </div>
                     </div>

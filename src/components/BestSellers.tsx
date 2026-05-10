@@ -88,7 +88,7 @@ const BestSellers = () => {
                 </Link>
                 <h3 className="font-display text-lg text-foreground">{item.name}</h3>
                 <div className="flex items-center justify-between mt-2">
-                  <p className="font-display text-xl text-primary">৳{Number(item.price).toFixed(0)}</p>
+                  <p className="font-display text-xl text-primary">Tk {Number(item.price).toFixed(0)}</p>
                   <Button size="sm" className="rounded-full gap-2" onClick={() => addToCart(item.id)}>
                     <ShoppingBag size={14} />
                     Add

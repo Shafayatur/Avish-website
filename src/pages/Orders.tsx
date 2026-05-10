@@ -62,7 +62,7 @@ const Orders = () => {
                     <button onClick={() => setExpandedOrder(expandedOrder === order.id ? null : order.id)} className="w-full p-6 flex items-center justify-between text-left">
                       <div>
                         <p className="font-body text-xs text-muted-foreground">Order #{order.id.slice(0, 8)}</p>
-                        <p className="font-display text-lg">৳{Number(order.total).toFixed(2)}</p>
+                        <p className="font-display text-lg">Tk {Number(order.total).toFixed(2)}</p>
                         <p className="font-body text-xs text-muted-foreground">{new Date(order.created_at).toLocaleDateString()}</p>
                       </div>
                       <div className="flex items-center gap-3">
@@ -82,9 +82,9 @@ const Orders = () => {
                             </div>
                             <div className="flex-1">
                               <p className="font-body text-sm">{item.product_name}</p>
-                              <p className="font-body text-xs text-muted-foreground">Qty: {item.quantity} × ৳{Number(item.price).toFixed(2)}</p>
+                              <p className="font-body text-xs text-muted-foreground">Qty: {item.quantity} × Tk {Number(item.price).toFixed(2)}</p>
                             </div>
-                            <p className="font-body text-sm">৳{(item.quantity * Number(item.price)).toFixed(2)}</p>
+                            <p className="font-body text-sm">Tk {(item.quantity * Number(item.price)).toFixed(2)}</p>
                           </div>
                         ))}
                         <div className="pt-3 border-t border-border font-body text-xs text-muted-foreground space-y-1">

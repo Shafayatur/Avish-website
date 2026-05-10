@@ -44,6 +44,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState<any>(null);
   usePageTitle(product?.name || "Product");
   const [quantity, setQuantity] = useState(1);
+  const [showFullDesc, setShowFullDesc] = useState(false);
   const [loading, setLoading] = useState(true);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
@@ -305,10 +306,10 @@ const ProductDetail = () => {
                 )}
 
                 <div className="flex items-center gap-4">
-                  <span className="font-display text-3xl text-primary">৳{Number(product.price).toFixed(2)}</span>
+                  <span className="font-display text-3xl text-primary">Tk {Number(product.price).toFixed(2)}</span>
                   {product.compare_at_price && (
                     <>
-                      <span className="font-body text-lg text-muted-foreground line-through">৳{Number(product.compare_at_price).toFixed(2)}</span>
+                      <span className="font-body text-lg text-muted-foreground line-through">Tk {Number(product.compare_at_price).toFixed(2)}</span>
                       <span className="bg-destructive text-destructive-foreground px-2 py-1 rounded-full font-body text-xs">
                         {Math.round((1 - product.price / product.compare_at_price) * 100)}% OFF
                       </span>
@@ -318,7 +319,19 @@ const ProductDetail = () => {
               </div>
 
               {product.description && (
-                <p className="font-body text-muted-foreground leading-relaxed">{product.description}</p>
+                <div>
+                    <p className={`font-body text-muted-foreground leading-relaxed ${!showFullDesc && product.description.length > 150 ? "line-clamp-3" : ""}`}>
+                    {product.description}
+                  </p>
+                  {product.description.length > 150 && (
+                    <button
+                      onClick={() => setShowFullDesc(!showFullDesc)}
+                      className="font-body text-xs text-primary hover:underline mt-1"
+                    >
+                      {showFullDesc ? "See less" : "See more..."}
+                    </button>
+                  )}
+                </div>
               )}
 
               <div className="flex items-center gap-4">
@@ -350,7 +363,7 @@ const ProductDetail = () => {
               <div className="grid grid-cols-3 gap-3 mt-6">
                 <div className="glass-card rounded-xl p-4 text-center">
                   <Truck size={20} className="mx-auto text-primary mb-2" />
-                  <p className="font-body text-xs text-muted-foreground">Free Delivery 3000৳+</p>
+                  <p className="font-body text-xs text-muted-foreground">Free Delivery 3000Tk +</p>
                 </div>
                 <div className="glass-card rounded-xl p-4 text-center">
                   <Shield size={20} className="mx-auto text-primary mb-2" />
@@ -468,7 +481,7 @@ const ProductDetail = () => {
                         )}
                       </div>
                       <h3 className="font-display text-lg group-hover:text-primary transition-colors">{rp.name}</h3>
-                      <p className="font-display text-xl text-primary mt-1">৳{Number(rp.price).toFixed(2)}</p>
+                      <p className="font-display text-xl text-primary mt-1">Tk {Number(rp.price).toFixed(2)}</p>
                     </div>
                   </Link>
                 ))}

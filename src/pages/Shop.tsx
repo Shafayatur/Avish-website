@@ -126,11 +126,11 @@ const Shop = () => {
                     </select>
                   </div>
                   <div>
-                    <label className="font-body text-xs tracking-widest uppercase text-muted-foreground block mb-2">Min Price (৳)</label>
+                    <label className="font-body text-xs tracking-widest uppercase text-muted-foreground block mb-2">Min Price (Tk )</label>
                     <Input type="number" value={priceRange[0]} onChange={e => setPriceRange([Number(e.target.value), priceRange[1]])} className="rounded-xl" />
                   </div>
                   <div>
-                    <label className="font-body text-xs tracking-widest uppercase text-muted-foreground block mb-2">Max Price (৳)</label>
+                    <label className="font-body text-xs tracking-widest uppercase text-muted-foreground block mb-2">Max Price (Tk )</label>
                     <Input type="number" value={priceRange[1]} onChange={e => setPriceRange([priceRange[0], Number(e.target.value)])} className="rounded-xl" />
                   </div>
                 </div>
@@ -204,9 +204,9 @@ const Shop = () => {
                         <h3 className="font-display text-base md:text-lg mb-1 hover:text-primary transition-colors line-clamp-1">{product.name}</h3>
                       </Link>
                       <div className="flex items-center gap-2 mb-3">
-                        <span className="font-display text-lg text-primary">৳{Number(product.price).toFixed(0)}</span>
+                        <span className="font-display text-lg text-primary">Tk {Number(product.price).toFixed(0)}</span>
                         {product.compare_at_price && (
-                          <span className="font-body text-xs text-muted-foreground line-through">৳{Number(product.compare_at_price).toFixed(0)}</span>
+                          <span className="font-body text-xs text-muted-foreground line-through">Tk {Number(product.compare_at_price).toFixed(0)}</span>
                         )}
                       </div>
                       <button

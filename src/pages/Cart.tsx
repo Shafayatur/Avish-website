@@ -45,14 +45,14 @@ const Cart = () => {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="font-display text-lg truncate">{item.product?.name}</h3>
-                      <p className="font-body text-primary">৳{Number(item.product?.price || 0).toFixed(2)}</p>
+                      <p className="font-body text-primary">Tk {Number(item.product?.price || 0).toFixed(2)}</p>
                     </div>
                     <div className="flex items-center border border-border rounded-full">
                       <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="p-2 hover:text-primary"><Minus size={14} /></button>
                       <span className="w-8 text-center font-body text-sm">{item.quantity}</span>
                       <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="p-2 hover:text-primary"><Plus size={14} /></button>
                     </div>
-                    <p className="font-display text-lg sm:w-24 text-right ml-auto sm:ml-0">৳{(item.quantity * Number(item.product?.price || 0)).toFixed(2)}</p>
+                    <p className="font-display text-lg sm:w-24 text-right ml-auto sm:ml-0">Tk {(item.quantity * Number(item.product?.price || 0)).toFixed(2)}</p>
                     <button onClick={() => removeFromCart(item.id)} className="text-muted-foreground hover:text-destructive transition-colors p-2">
                       <Trash2 size={16} />
                     </button>
@@ -66,18 +66,18 @@ const Cart = () => {
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between font-body text-sm">
                       <span className="text-muted-foreground">Subtotal</span>
-                      <span>৳{totalPrice.toFixed(2)}</span>
+                      <span>Tk {totalPrice.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between font-body text-sm">
                       <span className="text-muted-foreground">Shipping</span>
-                      <span>{shipping === 0 ? "Free" : `৳${shipping.toFixed(2)}`}</span>
+                      <span>{shipping === 0 ? "Free" : `Tk ${shipping.toFixed(2)}`}</span>
                     </div>
                     <div className="border-t border-border pt-3 flex justify-between font-display text-xl">
                       <span>Total</span>
-                      <span className="text-primary">৳{(totalPrice + shipping).toFixed(2)}</span>
+                      <span className="text-primary">Tk {(totalPrice + shipping).toFixed(2)}</span>
                     </div>
                   </div>
-                  <p className="font-body text-xs text-muted-foreground mb-4">💰 Payment: Cash on Delivery</p>
+                  <p className="font-body text-xs text-muted-foreground mb-4">🏦 Bank Transfer / Online Payment</p>
                   <Button asChild variant="hero" className="w-full rounded-xl">
                     <Link to="/checkout">Proceed to Checkout</Link>
                   </Button>

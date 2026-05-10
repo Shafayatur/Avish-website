@@ -171,11 +171,11 @@ const ShowStopper = () => {
               className="flex items-end gap-3 pt-2"
             >
               <span className="font-display text-4xl md:text-5xl text-primary font-light">
-                ৳{Number(product.price).toFixed(0)}
+                Tk {Number(product.price).toFixed(0)}
               </span>
               {product.compare_at_price && (
                 <span className="font-body text-lg text-muted-foreground line-through pb-1">
-                  ৳{Number(product.compare_at_price).toFixed(0)}
+                  Tk {Number(product.compare_at_price).toFixed(0)}
                 </span>
               )}
             </motion.div>
