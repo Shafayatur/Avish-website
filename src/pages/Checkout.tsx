@@ -14,6 +14,8 @@ import Footer from "@/components/Footer";
 import { CheckCircle, User, ChevronDown, ChevronUp } from "lucide-react";
 import { motion as m, AnimatePresence } from "framer-motion";
 import usePageTitle from "@/hooks/usePageTitle";
+import { bdLocations, districts } from "@/data/bd-locations";
+import { bdLocations, districts } from "@/data/bd-locations";
 
 const Checkout = () => {
   usePageTitle("Checkout");
@@ -281,13 +283,13 @@ const Checkout = () => {
                       <input
                         list="districts"
                         value={form.shipping_district}
-                        onChange={e => updateField("shipping_district", e.target.value)}
+                        onChange={e => { updateField("shipping_district", e.target.value); updateField("shipping_thana", ""); }}
                         required
                         className="mt-1.5 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm font-body focus:outline-none focus:ring-2 focus:ring-primary/30"
                         placeholder="Select or type district..."
                       />
                       <datalist id="districts">
-                        {["Bagerhat","Bandarban","Barguna","Barisal","Bhola","Bogra","Brahmanbaria","Chandpur","Chittagong","Chuadanga","Comilla","Cox's Bazar","Dhaka","Dinajpur","Faridpur","Feni","Gaibandha","Gazipur","Gopalganj","Habiganj","Jamalpur","Jessore","Jhalokati","Jhenaidah","Joypurhat","Khagrachhari","Khulna","Kishoreganj","Kurigram","Kushtia","Lakshmipur","Lalmonirhat","Madaripur","Magura","Manikganj","Meherpur","Moulvibazar","Munshiganj","Mymensingh","Naogaon","Narail","Narayanganj","Narsingdi","Natore","Netrokona","Nilphamari","Noakhali","Pabna","Panchagarh","Patuakhali","Pirojpur","Rajbari","Rajshahi","Rangamati","Rangpur","Satkhira","Shariatpur","Sherpur","Sirajganj","Sunamganj","Sylhet","Tangail","Thakurgaon"].map(d => (
+                        {districts.map(d => (
                           <option key={d} value={d} />
                         ))}
                       </datalist>
@@ -303,7 +305,7 @@ const Checkout = () => {
                         placeholder="Select or type thana..."
                       />
                       <datalist id="thanas">
-                        {["Adabor","Badda","Banani","Baridhara","Cantonment","Demra","Dhanmondi","Gulshan","Hazaribagh","Jatrabari","Kadamtali","Kafrul","Kalabagan","Khilgaon","Khilkhet","Kotwali","Lalbagh","Mirpur","Mohammadpur","Motijheel","Mugda","Pallabi","Paltan","Ramna","Rayer Bazar","Sabujbagh","Shah Ali","Shahbag","Sher-e-Bangla Nagar","Shyampur","Sutrapur","Tejgaon","Turag","Uttara","Vatara","Wari","Agrabad","Akbarshah","Bakalia","Bayazid","Chandgaon","Chawkbazar","Double Mooring","EPZ","Halishahar","Khulshi","Kotwali","Pahartali","Panchlaish","Patenga","Sadarghat","Bandar","Boalkhali","Chandanaish","Fatikchhari","Hathazari","Karnaphuli","Lohagara","Mirsharai","Patiya","Rangunia","Raozan","Sandwip","Satkania","Sitakunda","Aditmari","Hatibandha","Kaliganj","Lalmonirhat Sadar","Patgram","Derai","Dharmapasha","Dowarabazar","Jagannathpur","Jamalganj","Sullah","Sunamganj Sadar","Tahirpur","Balaganj","Beanibazar","Bishwanath","Companiganj","Fenchuganj","Golapganj","Gowainghat","Jaintiapur","Kanaighat","Osmani Nagar","South Surma","Sylhet Sadar","Zakiganj"].map(t => (
+                        {(bdLocations[form.shipping_district] || []).map(t => (
                           <option key={t} value={t} />
                         ))}
                       </datalist>
