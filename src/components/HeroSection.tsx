@@ -101,11 +101,11 @@ const HeroSection = () => {
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
           className="relative"
         >
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-video">
             <img
               src="/hero-cosmetics.jpg"
               alt="Avish luxury cosmetics collection"
-              className="w-full h-auto object-cover"
+              className="w-full h-full object-cover"
               width={1920}
               height={1080}
               loading="eager"
