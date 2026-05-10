@@ -49,6 +49,28 @@ const ProductDetail = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [dragStart, setDragStart] = useState<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setDragStart(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (dragStart === null) return;
+    const diff = dragStart - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        // swipe left - next
+        if (!showVideo && selectedImage < images.length - 1) setSelectedImage(s => s + 1);
+        else if (!showVideo && selectedImage === images.length - 1 && product?.video_url) setShowVideo(true);
+      } else {
+        // swipe right - prev
+        if (showVideo) { setShowVideo(false); setSelectedImage(images.length - 1); }
+        else if (selectedImage > 0) setSelectedImage(s => s - 1);
+      }
+    }
+    setDragStart(null);
+  };
   const [showVideo, setShowVideo] = useState(false);
   const [zoomed, setZoomed] = useState(false);
   const [reviewForm, setReviewForm] = useState({ rating: 5, comment: "", reviewer_name: "" });
@@ -164,7 +186,9 @@ const ProductDetail = () => {
             {/* Media Gallery */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
               {/* Main display */}
-              <div className="relative rounded-3xl overflow-hidden bg-cream aspect-square group">
+              <div className="relative rounded-3xl overflow-hidden bg-cream aspect-square group cursor-grab active:cursor-grabbing"
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}>
                 <AnimatePresence mode="wait">
                   {showVideo && videoUrl ? (
                     <motion.div
