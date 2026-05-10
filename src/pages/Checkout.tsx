@@ -22,6 +22,7 @@ const Checkout = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [insideDhaka, setInsideDhaka] = useState(true);
   const [orderPlaced, setOrderPlaced] = useState<string | null>(null);
   const [showCreateAccount, setShowCreateAccount] = useState(false);
   const [accountForm, setAccountForm] = useState({ email: "", password: "" });
@@ -36,7 +37,8 @@ const Checkout = () => {
     notes: "",
   });
 
-  const total = totalPrice;
+  const deliveryCharge = insideDhaka ? 80 : 150;
+  const total = totalPrice + deliveryCharge;
 
   // Autofill from profile if logged in
   useEffect(() => {
@@ -70,6 +72,7 @@ const Checkout = () => {
       id: orderId,
       user_id: user?.id || null,
       total,
+      shipping_cost: deliveryCharge,
       shipping_name: form.shipping_name,
       shipping_address: form.shipping_address,
       shipping_city: form.shipping_city,
@@ -292,6 +295,37 @@ const Checkout = () => {
                   </div>
                 </div>
 
+                {/* Delivery Location */}
+                <div className="glass-card rounded-2xl p-6">
+                  <h3 className="font-display text-xl mb-4">Delivery Location</h3>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setInsideDhaka(true)}
+                      className={`p-4 rounded-xl border-2 text-left transition-all ${insideDhaka ? "border-primary bg-primary/5" : "border-border"}`}
+                    >
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className={`w-3 h-3 rounded-full border-2 ${insideDhaka ? "border-primary bg-primary" : "border-muted-foreground"}`} />
+                        <p className="font-body text-sm font-medium">Inside Dhaka</p>
+                      </div>
+                      <p className="font-display text-lg text-primary">৳80</p>
+                      <p className="font-body text-xs text-muted-foreground">1-2 days</p>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setInsideDhaka(false)}
+                      className={`p-4 rounded-xl border-2 text-left transition-all ${!insideDhaka ? "border-primary bg-primary/5" : "border-border"}`}
+                    >
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className={`w-3 h-3 rounded-full border-2 ${!insideDhaka ? "border-primary bg-primary" : "border-muted-foreground"}`} />
+                        <p className="font-body text-sm font-medium">Outside Dhaka</p>
+                      </div>
+                      <p className="font-display text-lg text-primary">৳150</p>
+                      <p className="font-body text-xs text-muted-foreground">2-4 days</p>
+                    </button>
+                  </div>
+                </div>
+
                 <div className="glass-card rounded-2xl p-6">
                   <h3 className="font-display text-xl mb-4">Payment Method</h3>
                   <div className="flex items-center gap-3 p-4 border-2 border-primary rounded-xl bg-primary/5">
@@ -333,8 +367,8 @@ const Checkout = () => {
                       <span>৳{totalPrice.toFixed(0)}</span>
                     </div>
                     <div className="flex justify-between font-body text-sm">
-                      <span className="text-muted-foreground">Shipping</span>
-                      <span className="text-muted-foreground">Calculated later</span>
+                      <span className="text-muted-foreground">Delivery ({insideDhaka ? "Inside Dhaka" : "Outside Dhaka"})</span>
+                      <span>৳{deliveryCharge}</span>
                     </div>
                     <div className="flex justify-between font-display text-xl pt-2 border-t border-border">
                       <span>Total</span>
@@ -347,6 +381,10 @@ const Checkout = () => {
                   <p className="font-body text-xs text-muted-foreground text-center mt-3">
                     💰 Pay on delivery — no payment needed now
                   </p>
+                  <div className="mt-4 p-3 bg-muted/50 rounded-xl">
+                    <p className="font-body text-xs font-medium text-foreground mb-1">⚠️ Return Policy</p>
+                    <p className="font-body text-xs text-muted-foreground leading-relaxed">Returns accepted only for order mismatch or damaged products. Must be checked in front of delivery person. No returns after delivery person leaves.</p>
+                  </div>
                 </div>
               </div>
             </div>

@@ -347,15 +347,19 @@ const ProductDetail = () => {
               <div className="grid grid-cols-3 gap-3 mt-6">
                 <div className="glass-card rounded-xl p-4 text-center">
                   <Truck size={20} className="mx-auto text-primary mb-2" />
-                  <p className="font-body text-xs text-muted-foreground">Free Shipping 500৳+</p>
+                  <p className="font-body text-xs text-muted-foreground">Free Delivery 3000৳+</p>
                 </div>
                 <div className="glass-card rounded-xl p-4 text-center">
                   <Shield size={20} className="mx-auto text-primary mb-2" />
-                  <p className="font-body text-xs text-muted-foreground">Genuine Products</p>
+                  <p className="font-body text-xs text-muted-foreground">100% Authentic</p>
                 </div>
-                <div className="glass-card rounded-xl p-4 text-center">
+                <div className="glass-card rounded-xl p-4 text-center cursor-pointer group relative">
                   <RotateCcw size={20} className="mx-auto text-primary mb-2" />
-                  <p className="font-body text-xs text-muted-foreground">Easy Returns</p>
+                  <p className="font-body text-xs text-muted-foreground">Return Policy</p>
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 glass-card rounded-xl p-3 text-left opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none shadow-lg">
+                    <p className="font-body text-xs font-medium text-foreground mb-1">Return Policy</p>
+                    <p className="font-body text-xs text-muted-foreground leading-relaxed">Returns accepted only for order mismatch or damaged/broken products. Items must be checked in front of the delivery person at the time of delivery. No returns will be accepted after the delivery person leaves.</p>
+                  </div>
                 </div>
               </div>
             </motion.div>

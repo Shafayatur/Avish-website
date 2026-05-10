@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import { Leaf, Shield, Truck, Sparkles } from "lucide-react";
+import { Shield, Truck, Sparkles, BadgeCheck } from "lucide-react";
 
 const features = [
-  { icon: Leaf, title: "100% Natural", desc: "Premium ingredients sourced from nature, free from harmful chemicals." },
+  { icon: BadgeCheck, title: "100% Authentic", desc: "Every product is genuine and sourced directly from verified suppliers. No counterfeits, ever." },
   { icon: Shield, title: "Quality Assured", desc: "Every product undergoes rigorous quality testing before reaching you." },
   { icon: Truck, title: "Fast Delivery", desc: "Quick and reliable shipping across Bangladesh with order tracking." },
   { icon: Sparkles, title: "Cruelty Free", desc: "Never tested on animals. Beauty that's kind to all living beings." },
