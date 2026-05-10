@@ -174,7 +174,7 @@ const ProductDetail = () => {
   );
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden w-full">
       <Navbar />
       <div className="pt-28 pb-20">
         <div className="container mx-auto px-6">
@@ -184,7 +184,7 @@ const ProductDetail = () => {
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             {/* Media Gallery */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4 min-w-0">
               {/* Main display */}
               <div className="relative rounded-3xl overflow-hidden bg-cream aspect-square group cursor-grab active:cursor-grabbing"
                 onTouchStart={handleTouchStart}
@@ -309,7 +309,7 @@ const ProductDetail = () => {
             </motion.div>
 
             {/* Info */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="space-y-6 lg:sticky lg:top-28">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="space-y-6 lg:sticky lg:top-28 min-w-0">
               <div>
                 <p className="font-body text-xs tracking-[0.3em] uppercase text-primary mb-3">
                   {product.categories?.name || "Uncategorized"}
@@ -396,7 +396,7 @@ const ProductDetail = () => {
                 <div className="glass-card rounded-xl p-4 text-center cursor-pointer group relative">
                   <RotateCcw size={20} className="mx-auto text-primary mb-2" />
                   <p className="font-body text-xs text-muted-foreground">Return Policy</p>
-                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-72 bg-background border border-border rounded-xl p-4 text-left opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none shadow-xl">
+                  <div className="absolute bottom-full right-0 sm:left-1/2 sm:-translate-x-1/2 sm:right-auto mb-2 w-[85vw] max-w-[280px] sm:w-72 bg-background border border-border rounded-xl p-4 text-left opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none shadow-xl">
                     <p className="font-body text-sm font-semibold text-foreground mb-2">⚠️ Return Policy</p>
                     <p className="font-body text-xs text-foreground/80 leading-relaxed">Returns accepted only for order mismatch or damaged/broken products. Items must be checked in front of the delivery person at the time of delivery. No returns will be accepted after the delivery person leaves.</p>
                   </div>
