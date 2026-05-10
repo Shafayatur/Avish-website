@@ -66,7 +66,17 @@ const Shop = () => {
   const filtered = products
     .filter(p => {
       const matchCat = !selectedCategory || p.category_id === selectedCategory;
-      const matchSearch = !search || p.name.toLowerCase().includes(search.toLowerCase());
+      const searchLower = search.toLowerCase().trim();
+      const matchSearch = !searchLower || (() => {
+        const name = p.name.toLowerCase();
+        const desc = (p.description || "").toLowerCase();
+        const cat = (p.categories as any)?.name?.toLowerCase() || "";
+        // Direct includes
+        if (name.includes(searchLower) || desc.includes(searchLower) || cat.includes(searchLower)) return true;
+        // Word by word match - all words must appear somewhere
+        const words = searchLower.split(" ").filter(Boolean);
+        return words.every(word => name.includes(word) || desc.includes(word) || cat.includes(word));
+      })();
       const matchPrice = Number(p.price) >= priceRange[0] && Number(p.price) <= priceRange[1];
       return matchCat && matchSearch && matchPrice;
     })
