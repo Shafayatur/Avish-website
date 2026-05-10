@@ -48,7 +48,10 @@ const Checkout = () => {
 
     setLoading(true);
 
-    const { data: order, error: orderError } = await supabase.from("orders").insert({
+    const orderId = crypto.randomUUID();
+
+    const { error: orderError } = await supabase.from("orders").insert({
+      id: orderId,
       user_id: user?.id || null,
       total,
       shipping_name: form.shipping_name,
@@ -61,16 +64,16 @@ const Checkout = () => {
       payment_method: "cod",
       notes: form.notes || null,
       status: "pending",
-    }).select().single();
+    });
 
-    if (orderError || !order) {
+    if (orderError) {
       toast({ title: "Order failed", description: orderError?.message, variant: "destructive" });
       setLoading(false);
       return;
     }
 
     const orderItems = items.map(item => ({
-      order_id: order.id,
+      order_id: orderId,
       product_id: item.product_id,
       product_name: item.product?.name || "Unknown",
       product_image: item.product?.image_url || null,
@@ -81,7 +84,7 @@ const Checkout = () => {
     await supabase.from("order_items").insert(orderItems);
     await clearCart();
 
-    setOrderPlaced(order.id);
+    setOrderPlaced(orderId);
     setLoading(false);
   };
 
