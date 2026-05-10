@@ -66,11 +66,11 @@ const Shop = () => {
   const filtered = products
     .filter(p => {
       const matchCat = !selectedCategory || p.category_id === selectedCategory;
-      const searchNormalized = search.toLowerCase().trim().replace(/[.-]/g, "");
+      const searchNormalized = search.toLowerCase().trim().replace(/[.·-]/g, "");
       const matchSearch = !searchNormalized || (() => {
-        const name = p.name.toLowerCase().replace(/[.-]/g, "");
-        const desc = (p.description || "").toLowerCase().replace(/[.-]/g, "");
-        const cat = ((p.categories as any)?.name || "").toLowerCase().replace(/[.-]/g, "");
+        const name = p.name.toLowerCase().replace(/[.·-]/g, "");
+        const desc = (p.description || "").toLowerCase().replace(/[.·-]/g, "");
+        const cat = ((p.categories as any)?.name || "").toLowerCase().replace(/[.·-]/g, "");
         // Direct includes
         if (name.includes(searchNormalized) || desc.includes(searchNormalized) || cat.includes(searchNormalized)) return true;
         // Word by word match - all words must appear somewhere
