@@ -124,9 +124,9 @@ const CartSidebar = () => {
             {/* Footer */}
             {items.length > 0 && (
               <div className="border-t border-border px-5 py-4 space-y-3 flex-shrink-0">
-                {/* COD notice */}
+                {/* Payment notice */}
                 <div className="bg-muted/50 rounded-xl px-4 py-2 text-center">
-                  <p className="font-body text-xs text-muted-foreground">💰 Cash on Delivery</p>
+                  <p className="font-body text-xs text-muted-foreground">🏦 Bank Transfer / Online Payment</p>
                 </div>
 
                 {/* Total */}

@@ -22,7 +22,7 @@ const Checkout = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<"cod" | "bank" | "bkash" | "nagad">("cod");
+  const [paymentMethod, setPaymentMethod] = useState<"bank" | "bkash" | "nagad">("bank");
   const [insideDhaka, setInsideDhaka] = useState(true);
   const [orderPlaced, setOrderPlaced] = useState<string | null>(null);
   const [showCreateAccount, setShowCreateAccount] = useState(false);
@@ -31,9 +31,8 @@ const Checkout = () => {
   const [form, setForm] = useState({
     shipping_name: "",
     shipping_address: "",
-    shipping_city: "",
-    shipping_state: "",
-    shipping_zip: "",
+    shipping_district: "",
+    shipping_thana: "",
     shipping_phone: "",
     notes: "",
   });
@@ -51,7 +50,7 @@ const Checkout = () => {
           shipping_name: data.full_name || prev.shipping_name,
           shipping_phone: data.phone || prev.shipping_phone,
           shipping_address: data.address || prev.shipping_address,
-          shipping_city: data.city || prev.shipping_city,
+          shipping_district: data.city || prev.shipping_district,
         }));
       }
     });
@@ -60,7 +59,7 @@ const Checkout = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (items.length === 0) { toast({ title: "Cart is empty", variant: "destructive" }); return; }
-    if (!form.shipping_name || !form.shipping_phone || !form.shipping_address || !form.shipping_city) {
+    if (!form.shipping_name || !form.shipping_phone || !form.shipping_address || !form.shipping_district) {
       toast({ title: "Please fill in all required fields", variant: "destructive" });
       return;
     }
@@ -76,9 +75,9 @@ const Checkout = () => {
       shipping_cost: deliveryCharge,
       shipping_name: form.shipping_name,
       shipping_address: form.shipping_address,
-      shipping_city: form.shipping_city,
-      shipping_state: form.shipping_state || null,
-      shipping_zip: form.shipping_zip || null,
+      shipping_city: form.shipping_district,
+      shipping_state: form.shipping_thana || null,
+      shipping_zip: null,
       shipping_phone: form.shipping_phone,
       shipping_country: "BD",
       payment_method: paymentMethod,
@@ -158,7 +157,7 @@ const Checkout = () => {
                 Order ID: <span className="font-mono text-xs bg-muted px-2 py-1 rounded">#{orderPlaced.slice(0, 8)}</span>
               </p>
               <p className="font-body text-sm text-muted-foreground mb-8">
-                We'll deliver to <span className="text-foreground">{form.shipping_address}, {form.shipping_city}</span>. Payment on delivery.
+                We'll deliver to <span className="text-foreground">{form.shipping_address}, {form.shipping_thana ? form.shipping_thana + ", " : ""}{form.shipping_district}</span>.
               </p>
 
               {/* Optional create account */}
@@ -273,21 +272,41 @@ const Checkout = () => {
                       <Label className="font-body text-xs tracking-widest uppercase">Phone *</Label>
                       <Input value={form.shipping_phone} onChange={e => updateField("shipping_phone", e.target.value)} required className="mt-1.5 rounded-xl" placeholder="01XXXXXXXXX" />
                     </div>
-                    <div>
-                      <Label className="font-body text-xs tracking-widest uppercase">City *</Label>
-                      <Input value={form.shipping_city} onChange={e => updateField("shipping_city", e.target.value)} required className="mt-1.5 rounded-xl" placeholder="Dhaka" />
-                    </div>
                     <div className="sm:col-span-2">
                       <Label className="font-body text-xs tracking-widest uppercase">Full Address *</Label>
-                      <Input value={form.shipping_address} onChange={e => updateField("shipping_address", e.target.value)} required className="mt-1.5 rounded-xl" placeholder="House, Road, Area..." />
+                      <Input value={form.shipping_address} onChange={e => updateField("shipping_address", e.target.value)} required className="mt-1.5 rounded-xl" placeholder="House No, Road, Area..." />
                     </div>
                     <div>
-                      <Label className="font-body text-xs tracking-widest uppercase">District</Label>
-                      <Input value={form.shipping_state} onChange={e => updateField("shipping_state", e.target.value)} className="mt-1.5 rounded-xl" placeholder="Optional" />
+                      <Label className="font-body text-xs tracking-widest uppercase">District *</Label>
+                      <input
+                        list="districts"
+                        value={form.shipping_district}
+                        onChange={e => updateField("shipping_district", e.target.value)}
+                        required
+                        className="mt-1.5 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm font-body focus:outline-none focus:ring-2 focus:ring-primary/30"
+                        placeholder="Select or type district..."
+                      />
+                      <datalist id="districts">
+                        {["Bagerhat","Bandarban","Barguna","Barisal","Bhola","Bogra","Brahmanbaria","Chandpur","Chittagong","Chuadanga","Comilla","Cox's Bazar","Dhaka","Dinajpur","Faridpur","Feni","Gaibandha","Gazipur","Gopalganj","Habiganj","Jamalpur","Jessore","Jhalokati","Jhenaidah","Joypurhat","Khagrachhari","Khulna","Kishoreganj","Kurigram","Kushtia","Lakshmipur","Lalmonirhat","Madaripur","Magura","Manikganj","Meherpur","Moulvibazar","Munshiganj","Mymensingh","Naogaon","Narail","Narayanganj","Narsingdi","Natore","Netrokona","Nilphamari","Noakhali","Pabna","Panchagarh","Patuakhali","Pirojpur","Rajbari","Rajshahi","Rangamati","Rangpur","Satkhira","Shariatpur","Sherpur","Sirajganj","Sunamganj","Sylhet","Tangail","Thakurgaon"].map(d => (
+                          <option key={d} value={d} />
+                        ))}
+                      </datalist>
                     </div>
                     <div>
-                      <Label className="font-body text-xs tracking-widest uppercase">Postal Code</Label>
-                      <Input value={form.shipping_zip} onChange={e => updateField("shipping_zip", e.target.value)} className="mt-1.5 rounded-xl" placeholder="Optional" />
+                      <Label className="font-body text-xs tracking-widest uppercase">Thana / Upazila *</Label>
+                      <input
+                        list="thanas"
+                        value={form.shipping_thana}
+                        onChange={e => updateField("shipping_thana", e.target.value)}
+                        required
+                        className="mt-1.5 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm font-body focus:outline-none focus:ring-2 focus:ring-primary/30"
+                        placeholder="Select or type thana..."
+                      />
+                      <datalist id="thanas">
+                        {["Adabor","Badda","Banani","Baridhara","Cantonment","Demra","Dhanmondi","Gulshan","Hazaribagh","Jatrabari","Kadamtali","Kafrul","Kalabagan","Khilgaon","Khilkhet","Kotwali","Lalbagh","Mirpur","Mohammadpur","Motijheel","Mugda","Pallabi","Paltan","Ramna","Rayer Bazar","Sabujbagh","Shah Ali","Shahbag","Sher-e-Bangla Nagar","Shyampur","Sutrapur","Tejgaon","Turag","Uttara","Vatara","Wari","Agrabad","Akbarshah","Bakalia","Bayazid","Chandgaon","Chawkbazar","Double Mooring","EPZ","Halishahar","Khulshi","Kotwali","Pahartali","Panchlaish","Patenga","Sadarghat","Bandar","Boalkhali","Chandanaish","Fatikchhari","Hathazari","Karnaphuli","Lohagara","Mirsharai","Patiya","Rangunia","Raozan","Sandwip","Satkania","Sitakunda","Aditmari","Hatibandha","Kaliganj","Lalmonirhat Sadar","Patgram","Derai","Dharmapasha","Dowarabazar","Jagannathpur","Jamalganj","Sullah","Sunamganj Sadar","Tahirpur","Balaganj","Beanibazar","Bishwanath","Companiganj","Fenchuganj","Golapganj","Gowainghat","Jaintiapur","Kanaighat","Osmani Nagar","South Surma","Sylhet Sadar","Zakiganj"].map(t => (
+                          <option key={t} value={t} />
+                        ))}
+                      </datalist>
                     </div>
                     <div className="sm:col-span-2">
                       <Label className="font-body text-xs tracking-widest uppercase">Order Notes (optional)</Label>
@@ -330,21 +349,6 @@ const Checkout = () => {
                 <div className="glass-card rounded-2xl p-6">
                   <h3 className="font-display text-xl mb-4">Payment Method</h3>
                   <div className="space-y-3">
-                    {/* COD */}
-                    <button
-                      type="button"
-                      onClick={() => setPaymentMethod("cod")}
-                      className={`w-full flex items-center gap-3 p-4 rounded-xl border-2 text-left transition-all ${paymentMethod === "cod" ? "border-primary bg-primary/5" : "border-border"}`}
-                    >
-                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${paymentMethod === "cod" ? "border-primary" : "border-muted-foreground"}`}>
-                        {paymentMethod === "cod" && <div className="w-2 h-2 rounded-full bg-primary" />}
-                      </div>
-                      <div>
-                        <p className="font-body text-sm font-medium">Cash on Delivery</p>
-                        <p className="font-body text-xs text-muted-foreground">Pay when your order arrives</p>
-                      </div>
-                    </button>
-
                     {/* Bank Transfer */}
                     <button
                       type="button"
@@ -452,7 +456,7 @@ const Checkout = () => {
                     {loading ? "Placing Order..." : "Place Order"}
                   </Button>
                   <p className="font-body text-xs text-muted-foreground text-center mt-3">
-                    {paymentMethod === "cod" ? "💰 Pay on delivery — no payment needed now" : "🏦 Please complete your bank transfer before delivery"}
+                    🏦 Please complete payment before your order is confirmed
                   </p>
                   <div className="mt-4 p-3 bg-muted/50 rounded-xl">
                     <p className="font-body text-xs font-medium text-foreground mb-1">⚠️ Return Policy</p>
