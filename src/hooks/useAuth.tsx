@@ -57,7 +57,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const signUp = async (email: string, password: string, fullName: string) => {
-    const { error } = await supabase.auth.signUp({
+    // Check if email already exists by attempting sign in
+    const { data: existingUser } = await supabase
+      .from("profiles")
+      .select("id")
+      .eq("email", email)
+      .maybeSingle();
+
+    // Try OTP check - if user exists in auth, signInWithOtp gives a specific response
+    const { data: signUpData, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -65,6 +73,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         emailRedirectTo: window.location.origin,
       },
     });
+
+    // Supabase returns identities: [] for existing emails
+    if (signUpData?.user && signUpData.user.identities && signUpData.user.identities.length === 0) {
+      return { error: { message: "An account with this email already exists. Please sign in instead." } };
+    }
+
     return { error };
   };
 
