@@ -103,6 +103,20 @@ const Checkout = () => {
     }));
 
     await supabase.from("order_items").insert(orderItems);
+
+    // Deduct stock for each item
+    for (const item of items) {
+      const { data: product } = await supabase
+        .from("products")
+        .select("stock")
+        .eq("id", item.product_id)
+        .single();
+      if (product) {
+        const newStock = Math.max(0, product.stock - item.quantity);
+        await supabase.from("products").update({ stock: newStock }).eq("id", item.product_id);
+      }
+    }
+
     await clearCart();
 
     setOrderPlaced(orderId);

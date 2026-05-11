@@ -35,14 +35,41 @@ const AdminOrders = () => {
 
   useEffect(() => { fetchOrders(); }, []);
 
-  const updateStatus = async (orderId: string, status: string) => {
+  const updateStatus = async (orderId: string, status: string, previousStatus: string) => {
     const { error } = await supabase.from("orders").update({ status }).eq("id", orderId);
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
+      return;
+    }
+
+    // Restore stock if order is cancelled
+    if (status === "cancelled" && previousStatus !== "cancelled") {
+      const { data: orderItems } = await supabase
+        .from("order_items")
+        .select("product_id, quantity")
+        .eq("order_id", orderId);
+
+      if (orderItems) {
+        for (const item of orderItems) {
+          const { data: product } = await supabase
+            .from("products")
+            .select("stock")
+            .eq("id", item.product_id)
+            .single();
+          if (product) {
+            await supabase
+              .from("products")
+              .update({ stock: product.stock + item.quantity })
+              .eq("id", item.product_id);
+          }
+        }
+        toast({ title: "Order cancelled — stock restored" });
+      }
     } else {
       toast({ title: "Status updated to " + status });
-      fetchOrders();
     }
+
+    fetchOrders();
   };
 
   // Stats
@@ -168,7 +195,7 @@ const AdminOrders = () => {
                 <select
                   value={order.status}
                   onClick={e => e.stopPropagation()}
-                  onChange={e => updateStatus(order.id, e.target.value)}
+                  onChange={e => updateStatus(order.id, e.target.value, order.status)}
                   className={`px-3 py-1 rounded-full font-body text-xs capitalize cursor-pointer border-0 ${statusColors[order.status] || "bg-muted"}`}
                 >
                   {statusOptions.map(s => <option key={s} value={s}>{s}</option>)}
