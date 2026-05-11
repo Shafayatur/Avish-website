@@ -70,6 +70,24 @@ const Checkout = () => {
 
     const orderId = crypto.randomUUID();
 
+    // Check stock availability before placing order
+    for (const item of items) {
+      const { data: product } = await supabase
+        .from("products")
+        .select("stock, name")
+        .eq("id", item.product_id)
+        .single();
+      if (!product || product.stock < item.quantity) {
+        toast({
+          title: "Stock unavailable",
+          description: `"${product?.name || "A product"}" only has ${product?.stock || 0} left in stock. Please update your cart.`,
+          variant: "destructive"
+        });
+        setLoading(false);
+        return;
+      }
+    }
+
     const { error: orderError } = await supabase.from("orders").insert({
       id: orderId,
       user_id: user?.id || null,
