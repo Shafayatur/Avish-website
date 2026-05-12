@@ -209,6 +209,29 @@ const AdminProducts = () => {
     return <span className="font-body text-sm">{stock}</span>;
   };
 
+  const exportCSV = () => {
+    const rows = [
+      ["Name", "Price", "Stock", "Category", "Featured", "Best Seller", "Status"],
+      ...filtered.map(p => [
+        p.name,
+        p.price,
+        p.stock,
+        categories.find(c => c.id === p.category_id)?.name || "",
+        p.is_featured ? "Yes" : "No",
+        p.is_best_seller ? "Yes" : "No",
+        p.is_active ? "Active" : "Inactive",
+      ]),
+    ];
+    const csv = rows.map(r => r.map(v => `"${v}"`).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "avish-products.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -217,9 +240,14 @@ const AdminProducts = () => {
           <h3 className="font-display text-xl">Products</h3>
           <p className="font-body text-xs text-muted-foreground mt-1">{filtered.length} of {products.length} products</p>
         </div>
-        <Button onClick={() => { setEditing({ ...emptyProduct }); setIsNew(true); }} className="rounded-xl gap-2">
-          <Plus size={16} /> Add Product
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm" className="rounded-xl gap-2" onClick={exportCSV}>
+            <Download size={14} /> Export CSV
+          </Button>
+          <Button onClick={() => { setEditing({ ...emptyProduct }); setIsNew(true); }} className="rounded-xl gap-2">
+            <Plus size={16} /> Add Product
+          </Button>
+        </div>
       </div>
 
       {/* Filters */}

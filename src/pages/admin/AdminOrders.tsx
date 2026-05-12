@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Search, ChevronDown, ChevronUp, Package, TrendingUp, Clock, CheckCircle } from "lucide-react";
+import { Search, ChevronDown, ChevronUp, Package, TrendingUp, Clock, CheckCircle, Download } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import usePageTitle from "@/hooks/usePageTitle";
@@ -88,6 +88,31 @@ const AdminOrders = () => {
     return matchSearch && matchStatus;
   });
 
+  const exportCSV = () => {
+    const rows = [
+      ["Order ID", "Customer", "Phone", "Address", "City", "Total", "Status", "Payment", "Date"],
+      ...filtered.map(o => [
+        o.id.slice(0, 8),
+        o.shipping_name || "",
+        o.shipping_phone || "",
+        o.shipping_address || "",
+        o.shipping_city || "",
+        o.total,
+        o.status,
+        o.payment_method || "",
+        new Date(o.created_at).toLocaleDateString(),
+      ]),
+    ];
+    const csv = rows.map(r => r.map(v => `"${v}"`).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "avish-orders.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="space-y-6">
 
@@ -97,6 +122,9 @@ const AdminOrders = () => {
           <h3 className="font-display text-xl">Orders</h3>
           <p className="font-body text-xs text-muted-foreground mt-1">{filtered.length} of {orders.length} orders</p>
         </div>
+        <Button variant="outline" size="sm" className="rounded-xl gap-2" onClick={exportCSV}>
+          <Download size={14} /> Export CSV
+        </Button>
       </div>
 
       {/* Summary Cards */}
