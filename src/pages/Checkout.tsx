@@ -109,7 +109,7 @@ const Checkout = () => {
       payment_method: paymentMethod,
       notes: `${form.notes || ""}${transactionId ? ` | Transaction ID: ${transactionId}` : ""} | Delivery: ${insideDhaka ? "Inside Dhaka" : "Outside Dhaka"}`.trim(),
       status: "pending",
-      shipping_cost: deliveryCharge,
+
     });
 
     if (orderError) {
@@ -425,6 +425,9 @@ const Checkout = () => {
             {/* STEP 2 — Payment */}
             {step === "payment" && (
               <motion.div key="payment" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
+                <button onClick={() => setStep("delivery")} className="flex items-center gap-2 font-body text-sm text-muted-foreground hover:text-primary transition-colors mb-6">
+                  <ArrowRight size={16} className="rotate-180" /> Back to Delivery
+                </button>
                 <div className="grid lg:grid-cols-3 gap-10">
                   <div className="lg:col-span-2 space-y-6">
 
