@@ -126,23 +126,36 @@ const AdminProducts = () => {
   const generateSlug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, isAdditional = false) => {
-    const file = e.target.files?.[0];
-    if (!file || !editing) return;
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0 || !editing) return;
     setUploading(true);
-    const ext = file.name.split(".").pop();
-    const path = `products/${Date.now()}.${ext}`;
-    const { error } = await supabase.storage.from("product-images").upload(path, file);
-    if (error) {
-      toast({ title: "Upload failed", description: error.message, variant: "destructive" });
-    } else {
-      const { data: { publicUrl } } = supabase.storage.from("product-images").getPublicUrl(path);
-      if (isAdditional) {
-        setEditing({ ...editing, images: [...(editing.images || []), publicUrl] });
-      } else {
-        setEditing({ ...editing, image_url: publicUrl });
+
+    const uploadedUrls: string[] = [];
+    for (const f of files) {
+      try {
+        const ext = f.name.split(".").pop();
+        const path = `products/${Date.now()}_${Math.random().toString(36).slice(2, 8)}.${ext}`;
+        const { error } = await supabase.storage.from("product-images").upload(path, f);
+        if (error) {
+          toast({ title: "Upload failed", description: error.message, variant: "destructive" });
+          continue;
+        }
+        const { data: { publicUrl } } = supabase.storage.from("product-images").getPublicUrl(path);
+        uploadedUrls.push(publicUrl);
+      } catch (err: any) {
+        toast({ title: "Upload error", description: err?.message || String(err), variant: "destructive" });
       }
-      toast({ title: "Image uploaded!" });
     }
+
+    if (uploadedUrls.length > 0) {
+      if (isAdditional) {
+        setEditing({ ...editing, images: [...(editing.images || []), ...uploadedUrls] });
+      } else {
+        setEditing({ ...editing, image_url: uploadedUrls[0] });
+      }
+      toast({ title: "Image(s) uploaded!" });
+    }
+
     setUploading(false);
   };
 
