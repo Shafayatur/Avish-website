@@ -163,12 +163,17 @@ const AdminProducts = () => {
     const payload = { ...editing, slug } as any;
     delete payload.id;
 
+    // Remove keys with undefined values so Supabase/Postgres don't receive the string "undefined"
+    const sanitizedPayload = Object.fromEntries(Object.entries(payload).filter(([_, v]) => v !== undefined));
+
     if (isNew) {
-      const { error } = await supabase.from("products").insert(payload);
+      const { error } = await supabase.from("products").insert(sanitizedPayload);
       if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
       toast({ title: "Product created!" });
     } else {
-      const { error } = await supabase.from("products").update(payload).eq("id", (editing as Product).id);
+      const prodId = (editing as Product).id;
+      if (!prodId) { toast({ title: "Error", description: "Missing product id", variant: "destructive" }); return; }
+      const { error } = await supabase.from("products").update(sanitizedPayload).eq("id", prodId);
       if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
       toast({ title: "Product updated!" });
     }
@@ -178,6 +183,7 @@ const AdminProducts = () => {
   };
 
   const handleDelete = async () => {
+    if (!deleteModal.id) { toast({ title: "Error", description: "Missing product id", variant: "destructive" }); return; }
     await supabase.from("products").delete().eq("id", deleteModal.id);
     toast({ title: "Product deleted" });
     setDeleteModal({ open: false, id: "", name: "" });
@@ -185,6 +191,7 @@ const AdminProducts = () => {
   };
 
   const handleToggleActive = async (product: Product) => {
+    if (!product.id) { toast({ title: "Error", description: "Missing product id", variant: "destructive" }); return; }
     await supabase.from("products").update({ is_active: !product.is_active }).eq("id", product.id);
     toast({ title: `Product ${!product.is_active ? "activated" : "deactivated"}` });
     fetchProducts();
